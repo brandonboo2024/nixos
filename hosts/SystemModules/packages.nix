@@ -18,10 +18,7 @@ let
     xdg-desktop-portal-wlr
     xdg-desktop-portal-gtk
     yazi
-
-    #security
-    libsecret
-    python3Packages.keyring
+    pass
   ];
 
   devTools = with pkgs; [
@@ -31,6 +28,7 @@ let
     bear
     gnumake
     gdb
+    pinentry-curses
     # wireshark
   ];
 in

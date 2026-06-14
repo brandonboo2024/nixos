@@ -16,7 +16,7 @@ git clone https://github.com/brandonboo2024/nixos
 ```
 
 ```
-sudo nixos-rebuild switch --flake ~/nixos-dotfiles#<hostname>
+sudo nixos-rebuild switch --flake ~/nixos#<hostname>
 ```
 
 I have multiple flakes that I created for fun that is inside, you may look to remove them if you do not want them/

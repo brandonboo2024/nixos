@@ -13,8 +13,15 @@ let
       ripgrep
       fd
       fzf
+      (texlive.combine {
+        inherit (pkgs.texlive)
+          scheme-basic
+          ulem
+          amsmath
+          dvipng
+          dvisvgm;
+      })
     ];
-
     lsps = with pkgs;[
       # Language Servers
         nixpkgs-fmt 

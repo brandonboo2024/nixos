@@ -27,10 +27,6 @@
       url = "github:AvengeMedia/DankMaterialShell";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    helium_flake = {
-      url = "github:brandonboo2024/helium_flake";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
     pi_flake = {
       url = "github:brandonboo2024/pi_flake";
       inputs.nixpkgs.follows = "nixpkgs";

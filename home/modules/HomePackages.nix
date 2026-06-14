@@ -1,4 +1,9 @@
-{ lib, pkgs, inputs, ... }:
+{
+  lib,
+  pkgs,
+  inputs,
+  ...
+}:
 let
   desktopPackages = with pkgs; [
     fastfetch
@@ -35,7 +40,7 @@ let
     codex
   ];
 
-  deploymentTools = with pkgs;[
+  deploymentTools = with pkgs; [
   ];
 in
 {
@@ -45,7 +50,6 @@ in
     ++ terminalTools
     ++ deploymentTools
     ++ [
-      inputs.helium_flake.packages.${pkgs.stdenv.hostPlatform.system}.default
       inputs.pi_flake.packages.${pkgs.stdenv.hostPlatform.system}.default
     ]
   );

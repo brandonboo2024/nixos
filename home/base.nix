@@ -27,6 +27,7 @@ in
     ./modules/sioyek.nix
     ./modules/emacs.nix
     ./modules/dev.nix
+    ./modules/mail.nix
   ];
   programs.git = {
     enable = true;
@@ -34,20 +35,6 @@ in
     settings = {
       user.name = "brandonboo2024";
       user.email = "brandonboojunwei@gmail.com";
-      sendemail.smtpServer = "smtp.gmail.com";
-      sendemail.smtpUser = "brandonboojunwei@gmail.com";
-      sendemail.smtpencryption = "ssl";
-      sendemail.smtpserverport = "465";
-      sendemail.smtpAuth = "OAUTHBEARER";
-      sendemail.from = "Brandon Boo brandonboojunwei@gmail.com";
-       
-      "credential \"smtp://smtp.gmail.com:465\"" = {
-        helper = [
-          ""
-          "gmail"
-        ];
-      };
-
     };
   };
   xdg.configFile = (builtins.mapAttrs (name: subpath: {
