@@ -33,9 +33,40 @@ in
     enable = true;
     package = pkgs.gitFull;
     settings = {
-      user.name = "brandonboo2024";
-      user.email = "brandonboojunwei@gmail.com";
+      user = {
+        name = "jwboo";
+        email = "jwboo@posteo.com";
+      };
+      sendemail = {
+        from = "jwboo@posteo.com";
+        sendmailCommand = "${pkgs.msmtp}/bin/msmtp --read-envelope-from";
+        confirm = "auto";
+        suppressFrom = true;
+        envelopeSender = "auto";
+        chainReplyto = false;
+      };
     };
+
+    includes = [
+      {
+        condition = "gitdir:~/102_school_proj/";
+        contents = {
+          user = {
+            name = "brandonboo2024";
+            email = "brandonboojunwei@gmail.com";
+          };
+        };
+      }
+      {
+        condition = "gitdir:~/work/";
+        contents = {
+          user = {
+            name = "brandonboo2024";
+            email = "brandonboojunwei@gmail.com";
+          };
+        };
+      }
+    ];
   };
   xdg.configFile = (builtins.mapAttrs (name: subpath: {
     source = create_symlink "${dotfiles}/${subpath}";
