@@ -1,4 +1,10 @@
-{config, pkgs, pkgsStable, inputs, ...}:
+{
+  config,
+  pkgs,
+  pkgsStable,
+  inputs,
+  ...
+}:
 
 let
   dotfiles = "${config.home.homeDirectory}/nixos/config";
@@ -6,21 +12,22 @@ let
   configs = {
     rofi = "rofi";
     mango = "mango";
-    nvim = "nvim";  #uncomment after adding your own nvim config
+    nvim = "nvim"; # uncomment after adding your own nvim config
     fastfetch = "fastfetch";
-		tmux = "tmux";
-		zathura = "zathura";
+    tmux = "tmux";
+    zathura = "zathura";
     emacs = "emacs";
+    foot = "foot";
+    river = "river";
+    kanshi = "kanshi";
   };
 in
 {
   imports = [
-    ./modules/mangowc.nix
+    ./modules/window_manager.nix
     ./modules/HomePackages.nix
-    ./modules/ui.nix
     ./modules/dms.nix
     ./modules/kitty.nix
-    ./modules/yazi.nix
     ./modules/nvim.nix
     ./modules/firefox.nix
     ./modules/bash.nix
@@ -68,27 +75,27 @@ in
       }
     ];
   };
-  xdg.configFile = (builtins.mapAttrs (name: subpath: {
-    source = create_symlink "${dotfiles}/${subpath}";
-    recursive = true;
-  }) (builtins.removeAttrs configs [ "nvim" ]))
-  // {
-    # Keep Neovim managed as directories so the Lua config stays portable.
-    "nvim/lua" = {
-      source = create_symlink "${dotfiles}/nvim/lua";
+  xdg.configFile =
+    (builtins.mapAttrs (name: subpath: {
+      source = create_symlink "${dotfiles}/${subpath}";
       recursive = true;
-    };
-    "nvim/plugin" = {
+    }) (builtins.removeAttrs configs [ "nvim" ]))
+    // {
+      # Keep Neovim managed as directories so the Lua config stays portable.
+      "nvim/lua" = {
+        source = create_symlink "${dotfiles}/nvim/lua";
+        recursive = true;
+      };
+      "nvim/plugin" = {
         source = create_symlink "${dotfiles}/nvim/plugin";
         recursive = true;
-    };
-    "nvim/after" = {
+      };
+      "nvim/after" = {
         source = create_symlink "${dotfiles}/nvim/after";
         recursive = true;
+      };
     };
-  };
   # symlinking configs not done by nix language
-  
 
   home.stateVersion = "25.11";
 }

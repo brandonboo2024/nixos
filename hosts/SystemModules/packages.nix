@@ -9,20 +9,16 @@ let
     wget
     bluez
     bluez-tools
-    blueman
     brightnessctl
     xwayland
     xwayland-satellite
     xkbcomp
     xkeyboard-config
     xdg-desktop-portal-wlr
-    xdg-desktop-portal-gtk
-    yazi
     pass
   ];
 
   devTools = with pkgs; [
-    git
     clang-tools
     llvmPackages_latest.clang
     bear

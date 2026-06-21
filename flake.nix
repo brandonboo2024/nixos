@@ -60,14 +60,12 @@
 
       pkgsStable = mkPkgs nixpkgs-stable;
       pkgs = mkPkgs nixpkgs;
-      themes = import ./home/themes.nix { inherit inputs pkgs; };
 
       mkHost =
         {
           hostModule,
           username,
           homeModule,
-          themeName,
           extraModule,
         }:
         nixpkgs.lib.nixosSystem {
@@ -96,7 +94,6 @@
                 backupFileExtension = "backup";
                 extraSpecialArgs = {
                   inherit inputs pkgsStable;
-                  theme = themes.${themeName};
                 };
                 users.${username} = {
                   imports = [
@@ -116,7 +113,6 @@
           hostModule = ./hosts/thinkpad/default.nix;
           username = "Daedalus";
           homeModule = ./home/boo/thinkpad.nix;
-          themeName = "thinkpad";
           extraModule = [
 
           ];
@@ -126,7 +122,6 @@
           hostModule = ./hosts/yoga/default.nix;
           username = "Prometheus";
           homeModule = ./home/boo/yoga.nix;
-          themeName = "yoga";
           extraModule = [
 
           ];
@@ -136,7 +131,6 @@
           hostModule = ./hosts/desktop_1/default.nix;
           username = "Hephaestus";
           homeModule = ./home/boo/desktop_1.nix;
-          themeName = "desktop_1";
           extraModule = [
 
           ];

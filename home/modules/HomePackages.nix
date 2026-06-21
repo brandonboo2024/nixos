@@ -21,23 +21,24 @@ let
     grim
     slurp
     cliphist
+    pamixer
     # dynamic menu
     bemenu
     # deskton launcher
     j4-dmenu-desktop
     swaybg
+    foot
+    bibata-cursors
+    kanshi
+    creek
   ];
 
   terminalTools = with pkgs; [
-    git-credential-email
     tmux
     p7zip
     unzip
     bat
     skim
-    typst
-    timewarrior
-    codex
   ];
 
   deploymentTools = with pkgs; [

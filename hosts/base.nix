@@ -37,6 +37,10 @@
 
   # bios updater
   # services.fwupd.enable = true;
+  programs.river-classic = {
+    enable = true;
+    xwayland.enable = true;
+  };
 
   # setting wayland display for swayidle to recognise
   environment = {
@@ -47,7 +51,7 @@
     };
     # setting environment variables
     variables = {
-      EDITOR = "nvim";
+      EDITOR = "emacs";
     };
   };
 

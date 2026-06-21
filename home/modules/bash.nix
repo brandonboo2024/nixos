@@ -31,12 +31,16 @@ in
 
             [ -n "$cwd" ] && [ "$cwd" != "$PWD" ] && builtin cd -- "$cwd"
             rm -f -- "$tmp"
-        }
+      }
         
       eval "$(starship init bash)"
     '';
   };
   programs.starship = {
     enable = true;
+  };
+  programs.yazi = {
+    enable = true;
+    shellWrapperName = "y";
   };
 }

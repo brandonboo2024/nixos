@@ -1,7 +1,7 @@
 {lib, theme, ...}:
 {
   programs.kitty = lib.mkForce {
-    enable = true;
+    enable = false;
     font = theme.kitty.font;
     themeFile = theme.kitty.themeFile;
     shellIntegration.mode = "no-cursor";

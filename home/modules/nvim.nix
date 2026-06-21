@@ -1,7 +1,7 @@
 {lib,pkgs,inputs,config,...}:
 {
   programs.neovim = lib.mkForce{
-    enable = true;
+    enable = false;
     viAlias = true;
     vimAlias = true;
     withRuby = false;

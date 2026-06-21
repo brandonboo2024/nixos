@@ -2,7 +2,7 @@
 
 {
   programs.obs-studio = {
-    enable = true;
+    enable = false;
     package = (
       pkgs.obs-studio.override{
         cudaSupport = true;

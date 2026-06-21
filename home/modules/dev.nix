@@ -32,7 +32,7 @@ let
   ];
   lsps = with pkgs; [
     # Language Servers
-    nixpkgs-fmt
+    # nixpkgs-fmt
     lua-language-server
     nil
     typescript-language-server
@@ -43,8 +43,8 @@ let
     py
     rust-analyzer
     nodejs
-    tinymist
-    websocat
+    # tinymist
+    # websocat
   ];
 
   languages = with pkgs; [

@@ -11,8 +11,6 @@
     package = pkgs.emacs-git-pgtk;
     extraPackages =
       epkgs: with epkgs; [
-        vterm
-        treesit-grammars.with-all-grammars
         pdf-tools
         notmuch
       ];
