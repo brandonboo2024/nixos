@@ -11,8 +11,8 @@ let
   create_symlink = path: config.lib.file.mkOutOfStoreSymlink path;
   configs = {
     rofi = "rofi";
-    mango = "mango";
     nvim = "nvim"; # uncomment after adding your own nvim config
+    mango = "mango";
     fastfetch = "fastfetch";
     tmux = "tmux";
     zathura = "zathura";
@@ -20,13 +20,13 @@ let
     foot = "foot";
     river = "river";
     kanshi = "kanshi";
+    fuzzel = "fuzzel";
   };
 in
 {
   imports = [
     ./modules/window_manager.nix
     ./modules/HomePackages.nix
-    ./modules/dms.nix
     ./modules/kitty.nix
     ./modules/nvim.nix
     ./modules/firefox.nix

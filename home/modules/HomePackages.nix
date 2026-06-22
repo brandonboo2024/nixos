@@ -13,6 +13,7 @@ let
     vesktop
     telegram-desktop
     whatsapp-electron
+    networkmanager_dmenu
   ];
 
   waylandTools = with pkgs; [
@@ -22,11 +23,10 @@ let
     slurp
     cliphist
     pamixer
-    # dynamic menu
-    bemenu
-    # deskton launcher
-    j4-dmenu-desktop
+    fuzzel
     swaybg
+    swayidle
+    swaylock
     foot
     bibata-cursors
     kanshi

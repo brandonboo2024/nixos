@@ -15,6 +15,7 @@ let
     xkbcomp
     xkeyboard-config
     xdg-desktop-portal-wlr
+    xdg-desktop-portal-gtk
     pass
   ];
 

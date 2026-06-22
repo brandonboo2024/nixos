@@ -9,7 +9,7 @@
     enable = true;
     settings = {
       default_session = {
-        command = "${pkgs.tuigreet}/bin/tuigreet --time --remember --asterisks --cmd mango";
+        command = "${pkgs.tuigreet}/bin/tuigreet --time --remember --asterisks --cmd river";
       };
     };
   };

@@ -1,5 +1,5 @@
 {
-  description = "Modular NixOS Configuration with MangoWC and DMS";
+  description = "Minimal NixOS with River-classic and KDE";
   nixConfig = {
     extra-substituters = [
       "https://nix-community.cachix.org"
@@ -19,14 +19,6 @@
       url = "git+ssh://git@github.com/brandonboo2024/assets";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    mango = {
-      url = "github:DreamMaoMao/mango";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-    dankMaterialShell = {
-      url = "github:AvengeMedia/DankMaterialShell";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
     pi_flake = {
       url = "github:brandonboo2024/pi_flake";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -41,8 +33,6 @@
       nixpkgs,
       home-manager,
       nixpkgs-stable,
-      mango,
-      dankMaterialShell,
       ...
     }:
     let
@@ -83,11 +73,7 @@
 
             hostModule
             home-manager.nixosModules.home-manager
-            mango.nixosModules.mango
-            dankMaterialShell.nixosModules.greeter
             {
-              programs.mango.enable = true;
-
               home-manager = {
                 useGlobalPkgs = true;
                 useUserPackages = true;
@@ -98,8 +84,6 @@
                 users.${username} = {
                   imports = [
                     homeModule
-                    mango.hmModules.mango
-                    inputs.dankMaterialShell.homeModules.dank-material-shell
                   ];
                 };
               };

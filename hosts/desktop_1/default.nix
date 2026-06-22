@@ -9,7 +9,6 @@
   pkgsStable,
   ...
 }:
-
 {
   imports = [
     # Include the results of the hardware scan.
@@ -18,6 +17,11 @@
     ../SystemModules/wireshark.nix
     ../SystemModules/vm.nix
   ];
+
+  services = {
+    desktopManager.plasma6.enable = true;
+  };
+
   networking.hostName = "Hephaestus"; # Define your hostname.
   # specific packages/ settings to be changed here
   environment.sessionVariables = {
