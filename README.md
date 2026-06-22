@@ -1,5 +1,5 @@
 # nixos-dotfiles
-NixOS Config with MangoWC and Dank Material Shell
+NixOS configuration with River and Emacs
 <br>Specs:
 <br>Wayland Compositor: [MangoWC](https://mangowc.vercel.app/)
 <br>Desktop Shell: [Dank Material Shell](https://danklinux.com/)
@@ -19,7 +19,7 @@ git clone https://github.com/brandonboo2024/nixos
 sudo nixos-rebuild switch --flake ~/nixos#<hostname>
 ```
 
-I have multiple flakes that I created for fun that is inside, you may look to remove them if you do not want them/
+I have multiple flakes that I created for fun that is inside, you may look to remove them if you do not want them
 
 ## Dependencies
 All dependencies are automatically managed by home-manager and nix package manager

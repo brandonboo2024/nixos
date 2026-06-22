@@ -27,9 +27,20 @@
 
   # security and keyrings
   services.gnome.gnome-keyring.enable = true;
+  security.polkit.enable = true;
 
-  services.power-profiles-daemon.enable = true;
-  services.upower.enable = true;
+  services.thermald.enable = true;
+  services.auto-cpufreq.enable = true;
+  services.auto-cpufreq.settings = {
+    battery = {
+      governor = "powersave";
+      turbo = "never";
+    };
+    charger = {
+      governor = "performance";
+      turbo = "auto";
+    };
+  };
   # allow proprietary software
   nixpkgs.config.allowUnfree = true;
   # Set your time zone.

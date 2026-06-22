@@ -6,18 +6,18 @@
 }:
 
 {
-  wayland.windowManager.mango = {
-    enable = false;
-  };
-  
+  # programs.mangowc.enable = true;
+
   services.mako = {
     enable = true;
     settings = {
       actions = true;
       default-timeout = 5000;
       markup = true;
-      font="monospace 10";
-      anchor="top-right";
+      font = "monospace 25";
+      anchor = "top-right";
+      width = 600;
+      height = 200;
     };
   };
 

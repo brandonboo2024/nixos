@@ -20,27 +20,6 @@
         "url": "ssh://git@github.com/brandonboo2024/assets"
       }
     },
-    "dankMaterialShell": {
-      "inputs": {
-        "flake-compat": "flake-compat",
-        "nixpkgs": [
-          "nixpkgs"
-        ]
-      },
-      "locked": {
-        "lastModified": 1782094368,
-        "narHash": "sha256-BsfCI7pbHgAa80MLgPyvwlvsG/1z1djzfwoy2E+7rKk=",
-        "owner": "AvengeMedia",
-        "repo": "DankMaterialShell",
-        "rev": "a043d477fbf30f19abdd56477c3d0fdff873325d",
-        "type": "github"
-      },
-      "original": {
-        "owner": "AvengeMedia",
-        "repo": "DankMaterialShell",
-        "type": "github"
-      }
-    },
     "emacs-overlay": {
       "inputs": {
         "nixpkgs": [
@@ -59,40 +38,6 @@
       "original": {
         "owner": "nix-community",
         "repo": "emacs-overlay",
-        "type": "github"
-      }
-    },
-    "flake-compat": {
-      "flake": false,
-      "locked": {
-        "lastModified": 1767039857,
-        "narHash": "sha256-vNpUSpF5Nuw8xvDLj2KCwwksIbjua2LZCqhV1LNRDns=",
-        "owner": "NixOS",
-        "repo": "flake-compat",
-        "rev": "5edf11c44bc78a0d334f6334cdaf7d60d732daab",
-        "type": "github"
-      },
-      "original": {
-        "owner": "NixOS",
-        "repo": "flake-compat",
-        "type": "github"
-      }
-    },
-    "flake-parts": {
-      "inputs": {
-        "nixpkgs-lib": "nixpkgs-lib"
-      },
-      "locked": {
-        "lastModified": 1749398372,
-        "narHash": "sha256-tYBdgS56eXYaWVW3fsnPQ/nFlgWi/Z2Ymhyu21zVM98=",
-        "owner": "hercules-ci",
-        "repo": "flake-parts",
-        "rev": "9305fe4e5c2a6fcf5ba6a3ff155720fbe4076569",
-        "type": "github"
-      },
-      "original": {
-        "owner": "hercules-ci",
-        "repo": "flake-parts",
         "type": "github"
       }
     },
@@ -117,28 +62,6 @@
         "type": "github"
       }
     },
-    "mango": {
-      "inputs": {
-        "flake-parts": "flake-parts",
-        "nixpkgs": [
-          "nixpkgs"
-        ],
-        "scenefx": "scenefx"
-      },
-      "locked": {
-        "lastModified": 1782094226,
-        "narHash": "sha256-tl2VUirG80viYkPJrsyuUQdhJGzoUJDXu5xH7EeCq54=",
-        "owner": "DreamMaoMao",
-        "repo": "mango",
-        "rev": "eb9b5ca8cc9864cea4e05a410d18c942230c4179",
-        "type": "github"
-      },
-      "original": {
-        "owner": "DreamMaoMao",
-        "repo": "mango",
-        "type": "github"
-      }
-    },
     "nixpkgs": {
       "locked": {
         "lastModified": 1781577229,
@@ -152,21 +75,6 @@
         "id": "nixpkgs",
         "ref": "nixos-unstable",
         "type": "indirect"
-      }
-    },
-    "nixpkgs-lib": {
-      "locked": {
-        "lastModified": 1748740939,
-        "narHash": "sha256-rQaysilft1aVMwF14xIdGS3sj1yHlI6oKQNBRTF40cc=",
-        "owner": "nix-community",
-        "repo": "nixpkgs.lib",
-        "rev": "656a64127e9d791a334452c6b6606d17539476e2",
-        "type": "github"
-      },
-      "original": {
-        "owner": "nix-community",
-        "repo": "nixpkgs.lib",
-        "type": "github"
       }
     },
     "nixpkgs-stable": {
@@ -223,34 +131,11 @@
     "root": {
       "inputs": {
         "assets": "assets",
-        "dankMaterialShell": "dankMaterialShell",
         "emacs-overlay": "emacs-overlay",
         "home-manager": "home-manager",
-        "mango": "mango",
         "nixpkgs": "nixpkgs",
         "nixpkgs-stable": "nixpkgs-stable_2",
         "pi_flake": "pi_flake"
-      }
-    },
-    "scenefx": {
-      "inputs": {
-        "nixpkgs": [
-          "mango",
-          "nixpkgs"
-        ]
-      },
-      "locked": {
-        "lastModified": 1750785057,
-        "narHash": "sha256-tGX6j4W91rcb+glXJo43sjPI9zQvPotonknG1BdihR4=",
-        "owner": "wlrfx",
-        "repo": "scenefx",
-        "rev": "3a6cfb12e4ba97b43326357d14f7b3e40897adfc",
-        "type": "github"
-      },
-      "original": {
-        "owner": "wlrfx",
-        "repo": "scenefx",
-        "type": "github"
       }
     }
   },
