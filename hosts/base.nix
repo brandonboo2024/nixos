@@ -21,6 +21,15 @@
     ./SystemModules/maintenance.nix
     # ./SystemModules/wireshark.nix
   ];
+  environment.sessionVariables = {
+    NIXOS_OZONE_WL = "1";
+    MOZ_ENABLE_WAYLAND = "1";
+    QT_QPA_PLATFORM = "wayland";
+    SDL_VIDEODRIVER = "wayland";
+    ELECTRON_OZONE_PLATFORM_HINT = "auto";
+    XDG_SESSION_TYPE = "wayland";
+    XDG_CURRENT_DESKTOP = "river";
+  };
 
   # Configure network connections interactively with nmcli or nmtui.
   networking.networkmanager.enable = true;

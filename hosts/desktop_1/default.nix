@@ -24,9 +24,6 @@
 
   networking.hostName = "Hephaestus"; # Define your hostname.
   # specific packages/ settings to be changed here
-  environment.sessionVariables = {
-    NIXOS_OZONE_WL = "1";
-  };
 
   # for nvidia driver
   hardware.enableAllFirmware = true;

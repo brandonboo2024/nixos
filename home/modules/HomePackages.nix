@@ -31,6 +31,7 @@ let
     bibata-cursors
     kanshi
     creek
+    libnotify
   ];
 
   terminalTools = with pkgs; [
