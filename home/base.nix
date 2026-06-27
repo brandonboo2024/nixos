@@ -21,11 +21,12 @@ let
     river = "river";
     kanshi = "kanshi";
     fuzzel = "fuzzel";
+    mako = "mako";
+    swayidle = "swayidle";
   };
 in
 {
   imports = [
-    ./modules/window_manager.nix
     ./modules/HomePackages.nix
     ./modules/kitty.nix
     ./modules/nvim.nix

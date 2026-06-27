@@ -32,6 +32,7 @@ let
     kanshi
     creek
     libnotify
+    mako
   ];
 
   terminalTools = with pkgs; [
