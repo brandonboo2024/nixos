@@ -17,6 +17,7 @@ let
   ];
 
   waylandTools = with pkgs; [
+    chafa
     wl-clipboard
     wl-clip-persist
     grim
