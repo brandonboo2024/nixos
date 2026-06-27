@@ -2,16 +2,22 @@
 # your system. Help is available in the configuration.nix(5) man page, on
 # https://search.nixos.org/options and in the NixOS manual (`nixos-help`).
 
-{ config, lib, pkgs, pkgsStable, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  pkgsStable,
+  ...
+}:
 
 {
-  imports =
-    [ # Include the results of the hardware scan.
-      ../base.nix
-      ./hardware-configuration.nix
-      ./sound.nix
-      # ../SystemModules/vm.nix
-    ];
+  imports = [
+    # Include the results of the hardware scan.
+    ../base.nix
+    ./hardware-configuration.nix
+    ./sound.nix
+    # ../SystemModules/vm.nix
+  ];
   networking.hostName = "Prometheus"; # Define your hostname.
   # specific packages/ settings to be changed here
 
@@ -24,13 +30,18 @@
     package = config.boot.kernelPackages.nvidiaPackages.stable;
     modesetting.enable = true;
   };
-  services.xserver.videoDrivers = ["nvidia"];
+  services.xserver.videoDrivers = [ "nvidia" ];
   hardware.nvidia.prime = {
     # enables you to run 'nvidia-offload <program>' to offload a program to your dGPU
     offload.enableOffloadCmd = true;
     offload.enable = true;
     intelBusId = "PCI:0:2:0";
     nvidiaBusId = "PCI:1:0:0";
+  };
+  console = {
+    font = "ter-v32n";
+    packages = with pkgs; [ terminus_font ];
+    earlySetup = true;
   };
 
   # services.tor = {
@@ -47,5 +58,5 @@
   #     Bridge = "obfs4 IP:ORPort [fingerprint]";
   #   };
   # };
-    
+
 }
