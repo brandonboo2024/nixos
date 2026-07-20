@@ -9,7 +9,7 @@ let
   py = pkgs.python313.withPackages (
     ps: with ps; [
       python-lsp-server
-      python-lsp-black
+      (python-lsp-black.overridePythonAttrs (_: { doCheck = false; }))
       pyflakes
       pycodestyle
       black
@@ -20,15 +20,13 @@ let
     ripgrep
     fd
     fzf
-    (texlive.combine {
-      inherit (pkgs.texlive)
-        scheme-basic
-        ulem
-        amsmath
-        dvipng
-        dvisvgm
-        ;
-    })
+    (texliveSmall.withPackages (ps: [
+      ps.scheme-basic
+      ps.ulem
+      ps.amsmath
+      ps.dvipng
+      ps.dvisvgm
+    ]))
   ];
   lsps = with pkgs; [
     # Language Servers
@@ -49,6 +47,7 @@ let
 
   languages = with pkgs; [
     zig
+    typst
   ];
 
 in
