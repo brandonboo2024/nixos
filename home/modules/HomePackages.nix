@@ -42,6 +42,7 @@ let
     unzip
     bat
     skim
+    claude-code
   ];
 
   deploymentTools = with pkgs; [
@@ -55,6 +56,7 @@ in
     ++ deploymentTools
     ++ [
       inputs.pi_flake.packages.${pkgs.stdenv.hostPlatform.system}.default
+      inputs.codex.packages.${pkgs.stdenv.hostPlatform.system}.default
     ]
   );
 }
