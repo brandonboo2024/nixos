@@ -1,6 +1,7 @@
 {
   lib,
   pkgs,
+  pkgsStable,
   inputs,
   ...
 }:
@@ -31,7 +32,7 @@ let
     foot
     bibata-cursors
     kanshi
-    creek
+    pkgsStable.creek # pinned to stable: unstable's wayland 1.26 breaks creek's zig-wayland scanner
     libnotify
     mako
   ];
