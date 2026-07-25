@@ -33,7 +33,11 @@
     # Where clangd should look for the glibc headers.
     etc."clangd/glibc/include".source = "${pkgs.stdenv.cc.libc.dev}/include";
     variables = {
-      EDITOR = "emacs";
+      # emacsclient, not emacs: River starts an Emacs daemon, and a bare
+      # `emacs` here would give every caller -- git, claude, codex -- a cold
+      # instance with none of the daemon's state. -a emacs falls back to
+      # starting one if no daemon is running.
+      EDITOR = "emacsclient -nw -a emacs";
     };
   };
 

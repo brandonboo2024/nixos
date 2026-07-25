@@ -29,7 +29,6 @@ let
     "river"
     "rofi"
     "scripts"
-    "swayidle"
     "tmux"
     "zathura"
   ];
@@ -41,6 +40,7 @@ let
   configFiles = [
     "foot/foot.ini"
     "fuzzel/fuzzel.ini"
+    "swayidle/config"
   ];
 
   # Neovim is linked one subdirectory at a time rather than as a whole, so
