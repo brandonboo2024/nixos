@@ -18,10 +18,10 @@
     XDG_CURRENT_DESKTOP = "river";
   };
 
+  # sioyek is the only PDF viewer. Exec in sioyek.desktop is `sioyek %f`,
+  # resolved through PATH, so this works whether or not the machine installed
+  # the xcb-wrapped build (see home/modules/sioyek.nix).
   xdg.mime.defaultApplications = {
-    "application/pdf" = [
-      "sioyek-x11.desktop"
-      "org.pwmt.zathura-pdf-mupdf.desktop"
-    ];
+    "application/pdf" = [ "sioyek.desktop" ];
   };
 }

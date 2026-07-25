@@ -4,20 +4,10 @@
   pkgs,
   ...
 }:
-let
-  sioyekX11 = pkgs.writeShellScriptBin "sioyek-x11" ''
-    exec env QT_QPA_PLATFORM=xcb ${pkgs.sioyek}/bin/sioyek "$@"
-  '';
-in
 {
-  home.packages = [
-    sioyekX11
-  ];
-
   programs.bash = {
     enable = true;
     shellAliases = {
-      sioyek = "sioyek-x11";
       cat = "bat";
 
       # Agent runs are long and largely autonomous, so let mako say when one

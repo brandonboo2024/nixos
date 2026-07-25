@@ -2,7 +2,6 @@
 let
   desktopPackages = with pkgs; [
     vim
-    zathura
   ];
 
   systemTools = with pkgs; [

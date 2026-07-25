@@ -30,7 +30,6 @@ let
     "rofi"
     "scripts"
     "tmux"
-    "zathura"
   ];
 
   # Linked file by file rather than as a directory, so that a machine can
