@@ -16,7 +16,7 @@
     ../base.nix
     ./hardware-configuration.nix
     ./sound.nix
-    # ../SystemModules/vm.nix
+    # ../modules/vm.nix
   ];
   networking.hostName = "Prometheus"; # Define your hostname.
   # specific packages/ settings to be changed here

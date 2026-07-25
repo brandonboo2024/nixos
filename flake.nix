@@ -109,28 +109,31 @@
       formatter.${system} = pkgs.nixfmt-tree;
 
       nixosConfigurations = {
+        # ThinkPad laptop
         Daedalus = mkHost {
-          hostModule = ./hosts/thinkpad/default.nix;
+          hostModule = ./hosts/Daedalus/default.nix;
           username = "Daedalus";
-          homeModule = ./home/boo/thinkpad.nix;
+          homeModule = ./home/Daedalus.nix;
           extraModule = [
 
           ];
         };
 
+        # Yoga laptop
         Prometheus = mkHost {
-          hostModule = ./hosts/yoga/default.nix;
+          hostModule = ./hosts/Prometheus/default.nix;
           username = "Prometheus";
-          homeModule = ./home/boo/yoga.nix;
+          homeModule = ./home/Prometheus.nix;
           extraModule = [
 
           ];
         };
 
+        # Desktop
         Hephaestus = mkHost {
-          hostModule = ./hosts/desktop_1/default.nix;
+          hostModule = ./hosts/Hephaestus/default.nix;
           username = "Hephaestus";
-          homeModule = ./home/boo/desktop_1.nix;
+          homeModule = ./home/Hephaestus.nix;
           extraModule = [
 
           ];

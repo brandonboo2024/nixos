@@ -14,12 +14,12 @@
 {
   imports = [
     #include common baselevel packages
-    ./SystemModules/packages.nix
-    ./SystemModules/bootloader.nix
-    ./SystemModules/greeter.nix
-    ./SystemModules/bluetooth.nix
-    ./SystemModules/maintenance.nix
-    # ./SystemModules/wireshark.nix
+    ./modules/packages.nix
+    ./modules/bootloader.nix
+    ./modules/greeter.nix
+    ./modules/bluetooth.nix
+    ./modules/maintenance.nix
+    # ./modules/wireshark.nix
   ];
   environment.sessionVariables = {
     NIXOS_OZONE_WL = "1";

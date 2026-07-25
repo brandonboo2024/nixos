@@ -1,31 +1,75 @@
-# nixos-dotfiles
-NixOS configuration with River and Emacs
-<br>Specs:
-<br>Wayland Compositor: [MangoWC](https://mangowc.vercel.app/)
-<br>Desktop Shell: [Dank Material Shell](https://danklinux.com/)
-<br>Text Editor: [Neovim](https://neovim.io/)
-<br>Terminal: kitty
-<br>File Manager: [Yazi](https://yazi-rs.github.io/docs/installation/)
-<br>App Launcher: [bemenu](https://github.com/Cloudef/bemenu)
+# nixos
 
-I have a separate [dotfiles](https://github.com/brandonboo2024/dotfiles) that I manage for more important tools so its more portable on non-NixOS devices.
+NixOS configuration for three machines, built from one flake.
 
-## Installation Instructions
-```
-git clone https://github.com/brandonboo2024/nixos
-```
+Specs:
+- **Compositor:** [River](https://codeberg.org/river/river) (`river-classic`)
+- **Status bar:** [Creek](https://git.sr.ht/~novakane/creek)
+- **Editor:** [Emacs](https://www.gnu.org/software/emacs/)
+- **Terminal:** [Foot](https://codeberg.org/dnkl/foot)
+- **File manager:** [Yazi](https://yazi-rs.github.io/)
+- **App launcher:** [Fuzzel](https://codeberg.org/dnkl/fuzzel)
+- **Notifications:** [Mako](https://github.com/emersion/mako)
 
-```
+## Hosts
+
+| Flake configuration | Device   | Host module        | Home Manager module   |
+| ------------------- | -------- | ------------------ | --------------------- |
+| `Hephaestus`        | Desktop  | `hosts/Hephaestus` | `home/Hephaestus.nix` |
+| `Prometheus`        | Yoga     | `hosts/Prometheus` | `home/Prometheus.nix` |
+| `Daedalus`          | ThinkPad | `hosts/Daedalus`   | `home/Daedalus.nix`   |
+
+The flake configuration name, `networking.hostName`, the Home Manager username,
+and the home directory all agree for each host.
+
+## Installation
+
+Portable application configuration lives in a
+[separate dotfiles repository](https://github.com/brandonboo2024/dotfiles) so it
+stays usable on non-NixOS machines. Home Manager symlinks it out of the store
+from `~/nixos/config`, so **both** repositories are required:
+
+```sh
+git clone https://github.com/brandonboo2024/nixos ~/nixos
+git clone https://github.com/brandonboo2024/dotfiles ~/nixos/config
 sudo nixos-rebuild switch --flake ~/nixos#<hostname>
 ```
 
-I have multiple flakes that I created for fun that is inside, you may look to remove them if you do not want them
+Without the second clone every `~/.config` symlink dangles.
+
+Some flake inputs are personal (assets, `pi_flake`); remove them from
+`flake.nix` if you do not want them.
+
+## Layout
+
+```
+flake.nix          inputs, overlays, host wiring
+hosts/base.nix     settings shared by every machine
+hosts/modules/     opt-in system modules
+hosts/<Host>/      hardware and machine-specific settings
+home/base.nix      shared Home Manager configuration
+home/modules/      per-application Home Manager modules
+home/<Host>.nix    per-machine Home Manager settings
+walls/             wallpapers
+config/            dotfiles repository (nested, not tracked here)
+```
+
+## Working on this repository
+
+```sh
+nix fmt                                   # format all .nix files
+nix flake check --no-build                # flake-level validation
+nix build --no-link .#nixosConfigurations.<host>.config.system.build.toplevel
+```
 
 ## Dependencies
-All dependencies are automatically managed by home-manager and nix package manager
-<br> To add additional LSPs to your neovim configuration, you will need to add packages via home-manager instead of Mason.nvim
+
+All dependencies are managed declaratively by Nix and Home Manager. Additional
+language servers belong in `home/modules/dev.nix` rather than in an
+editor-specific package manager.
 
 ---
 
 ## Preview
+
 <img width="1920" height="1080" alt="image" src="https://github.com/user-attachments/assets/659ce9e9-6f4c-4b46-a5bf-1a7efc3f0eb7" />

@@ -26,7 +26,7 @@ let
 in
 {
   imports = [
-    ./modules/HomePackages.nix
+    ./modules/packages.nix
     ./modules/nvim.nix
     ./modules/firefox.nix
     ./modules/bash.nix

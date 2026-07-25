@@ -15,7 +15,7 @@ let
 in
 {
   imports = [
-    ../base.nix
+    ./base.nix
   ];
   # symlinking configs not done by nix language
   xdg.configFile = builtins.mapAttrs (name: subpath: {
@@ -23,9 +23,11 @@ in
     recursive = true;
   }) configs;
 
-  home.username = "Daedalus";
-  home.homeDirectory = "/home/Daedalus";
-  # home.username="boo";
-  # home.homeDirectory = "/home/boo";
-  # home.stateVersion = "25.11";
+  home.packages = with pkgs; [
+    inkscape
+    steam
+  ];
+
+  home.username = "Hephaestus";
+  home.homeDirectory = "/home/Hephaestus";
 }

@@ -14,8 +14,8 @@
     # Include the results of the hardware scan.
     ../base.nix
     ./hardware-configuration.nix
-    ../SystemModules/wireshark.nix
-    ../SystemModules/vm.nix
+    ../modules/wireshark.nix
+    ../modules/vm.nix
   ];
 
   services = {

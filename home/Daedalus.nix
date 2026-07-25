@@ -15,8 +15,7 @@ let
 in
 {
   imports = [
-    ../base.nix
-    ../modules/obs.nix
+    ./base.nix
   ];
   # symlinking configs not done by nix language
   xdg.configFile = builtins.mapAttrs (name: subpath: {
@@ -24,13 +23,8 @@ in
     recursive = true;
   }) configs;
 
-  home.username = "Prometheus";
-  home.homeDirectory = "/home/Prometheus";
-
-  home.packages = with pkgs; [
-    zoom-us
-  ];
-
+  home.username = "Daedalus";
+  home.homeDirectory = "/home/Daedalus";
   # home.username="boo";
   # home.homeDirectory = "/home/boo";
   # home.stateVersion = "25.11";
