@@ -1,2 +1,6 @@
+# Nested dotfiles repository, cloned separately (see README).
 config/
 flakes/
+
+# Editor and tool droppings
+.nvimlog
