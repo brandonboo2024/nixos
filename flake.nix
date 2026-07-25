@@ -49,6 +49,7 @@
       system = "x86_64-linux";
       overlays = [
         inputs.emacs-overlay.overlays.default
+        inputs.claude.overlays.default
       ];
 
       mkPkgs =
