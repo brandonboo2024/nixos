@@ -1,61 +1,26 @@
-# Edit this configuration file to define what should be installed on
-# your system. Help is available in the configuration.nix(5) man page, on
-# https://search.nixos.org/options and in the NixOS manual (`nixos-help`).
+{ pkgs, ... }:
 
-{
-  config,
-  lib,
-  pkgs,
-  pkgsStable,
-  ...
-}:
-
+# Yoga laptop: Intel iGPU plus an NVIDIA dGPU, driven in PRIME offload mode,
+# so the dGPU stays idle until a program is started with `nvidia-offload`.
 {
   imports = [
-    # Include the results of the hardware scan.
-    ../base.nix
     ./hardware-configuration.nix
+    ../base.nix
+    ../modules/nvidia.nix
     ./sound.nix
-    # ../modules/vm.nix
   ];
-  # specific packages/ settings to be changed here
 
-  # for nvidia driver
-  hardware.enableAllFirmware = true;
-  hardware.graphics.enable = true;
-  hardware.graphics.enable32Bit = true;
-  hardware.nvidia = {
-    open = true;
-    package = config.boot.kernelPackages.nvidiaPackages.stable;
-    modesetting.enable = true;
-  };
-  services.xserver.videoDrivers = [ "nvidia" ];
   hardware.nvidia.prime = {
-    # enables you to run 'nvidia-offload <program>' to offload a program to your dGPU
-    offload.enableOffloadCmd = true;
     offload.enable = true;
+    offload.enableOffloadCmd = true;
     intelBusId = "PCI:0:2:0";
     nvidiaBusId = "PCI:1:0:0";
   };
+
+  # HiDPI panel: the default console font is unreadably small.
   console = {
     font = "ter-v32n";
     packages = with pkgs; [ terminus_font ];
     earlySetup = true;
   };
-
-  # services.tor = {
-  #   enable = true;
-  #   client.enable = true;
-  #   openFirewall = true;
-  #   relay = {
-  #     enable = true;
-  #     role = "relay";
-  #   };
-  #   settings = {
-  #     UseBridges = true;
-  #     ClientTransportPLugin = "obfs4 exec ${pkgs.obfs4}/bin/lyrebird";
-  #     Bridge = "obfs4 IP:ORPort [fingerprint]";
-  #   };
-  # };
-
 }
