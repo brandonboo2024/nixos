@@ -19,10 +19,13 @@ let
     name = "sioyek-xcb";
     paths = [ pkgs.sioyek ];
     buildInputs = [ pkgs.makeWrapper ];
+    # Only the platform, deliberately. Setting QT_XCB_GL_INTEGRATION=xcb_egl
+    # as well leaves sioyek running with no window ever appearing: the process
+    # starts, logs normally and then sits there. Measured on this machine by
+    # counting toplevels with lswt -- wayland: 0, xcb: 1, xcb+xcb_egl: 0.
     postBuild = ''
       wrapProgram $out/bin/sioyek \
-        --set QT_QPA_PLATFORM xcb \
-        --set QT_XCB_GL_INTEGRATION xcb_egl
+        --set QT_QPA_PLATFORM xcb
     '';
   };
 in
