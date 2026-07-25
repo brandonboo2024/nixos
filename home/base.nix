@@ -25,22 +25,22 @@ let
     "emacs"
     "fastfetch"
     "kanshi"
-    "mako"
     "river"
     "rofi"
     "scripts"
     "tmux"
   ];
 
-  # Linked file by file rather than as a directory, so that a machine can
-  # point one of them at a variant in the same directory (see
-  # home/Prometheus.nix). Overlaying a single file into a symlinked directory
-  # is not possible; overriding one of these entries is.
-  configFiles = [
-    "foot/foot.ini"
-    "fuzzel/fuzzel.ini"
-    "swayidle/config"
-  ];
+  # Target path -> portable default source. These are linked file by file so a
+  # machine can select a profile without turning the target directory into a
+  # symlink back into the dotfiles repository. See home/Prometheus.nix and
+  # home/Hephaestus.nix for the machine-specific overrides.
+  configFiles = {
+    "foot/foot.ini" = "foot/foot.default.ini";
+    "fuzzel/fuzzel.ini" = "fuzzel/fuzzel.default.ini";
+    "mako/config" = "mako/config.default";
+    "swayidle/config" = "swayidle/config.default";
+  };
 
   # Neovim is linked one subdirectory at a time rather than as a whole, so
   # that ~/.config/nvim itself stays writable for anything nvim generates.
@@ -102,7 +102,9 @@ in
       }
     ];
   };
-  xdg.configFile = lib.genAttrs (configDirs ++ configFiles ++ nvimDirs) linkDotfile;
+  xdg.configFile =
+    lib.genAttrs (configDirs ++ nvimDirs) linkDotfile
+    // lib.mapAttrs (_target: source: linkDotfile source) configFiles;
 
   # The helper scripts are called by bare name from tmux, River and each
   # other. River puts them on PATH itself for the graphical session; this
