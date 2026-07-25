@@ -28,6 +28,7 @@ let
     "mako"
     "river"
     "rofi"
+    "scripts"
     "swayidle"
     "tmux"
     "zathura"
@@ -103,6 +104,11 @@ in
     ];
   };
   xdg.configFile = lib.genAttrs (configDirs ++ configFiles ++ nvimDirs) linkDotfile;
+
+  # The helper scripts are called by bare name from tmux, River and each
+  # other. River puts them on PATH itself for the graphical session; this
+  # covers interactive shells.
+  home.sessionPath = [ "${config.xdg.configHome}/scripts" ];
 
   home.stateVersion = "25.11";
 }
