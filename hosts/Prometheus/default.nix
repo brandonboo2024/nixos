@@ -6,6 +6,7 @@
   imports = [
     ./hardware-configuration.nix
     ../base.nix
+    ../profiles/laptop.nix
     ../modules/nvidia.nix
     ./sound.nix
   ];
