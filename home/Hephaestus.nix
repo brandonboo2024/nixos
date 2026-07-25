@@ -10,6 +10,7 @@
 {
   imports = [
     ./base.nix
+    ./profiles/river.nix
   ];
 
   # Mains-powered, so it locks on idle but never suspends.

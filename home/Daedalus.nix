@@ -7,5 +7,6 @@
 {
   imports = [
     ./base.nix
+    ./profiles/river.nix
   ];
 }

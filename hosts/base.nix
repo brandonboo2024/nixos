@@ -13,10 +13,8 @@
     ./modules/bluetooth.nix
     ./modules/bootloader.nix
     ./modules/fonts.nix
-    ./modules/greeter.nix
     ./modules/maintenance.nix
     ./modules/users.nix
-    ./modules/wayland.nix
   ];
 
   # Configure network connections interactively with nmcli or nmtui.
@@ -39,6 +37,13 @@
       # starting one if no daemon is running.
       EDITOR = "emacsclient -nw -a emacs";
     };
+  };
+
+  # Not session-specific: whatever the desktop, sioyek opens PDFs. Its
+  # Exec is `sioyek %f`, resolved through PATH, so this works whether or not
+  # the machine installed the xcb-wrapped build (see home/modules/sioyek.nix).
+  xdg.mime.defaultApplications = {
+    "application/pdf" = [ "sioyek.desktop" ];
   };
 
   services.printing.enable = false;

@@ -6,6 +6,7 @@
   imports = [
     ./hardware-configuration.nix
     ../base.nix
+    ../profiles/river.nix
     ../modules/nvidia.nix
     ../modules/vm.nix
   ];

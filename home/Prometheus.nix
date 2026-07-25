@@ -10,6 +10,7 @@
 {
   imports = [
     ./base.nix
+    ./profiles/river.nix
     ./modules/obs.nix
   ];
 
