@@ -19,6 +19,14 @@ in
     shellAliases = {
       sioyek = "sioyek-x11";
       cat = "bat";
+
+      # Agent runs are long and largely autonomous, so let mako say when one
+      # finishes rather than watching the terminal for it. No recursion here:
+      # aliases expand only for interactive input, so notify-done itself
+      # resolves the real binary on PATH.
+      claude = "notify-done claude";
+      codex = "notify-done codex";
+      pi = "notify-done pi";
     };
     initExtra = ''
       export GPG_TTY=$(tty)
