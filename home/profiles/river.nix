@@ -41,5 +41,6 @@
 
     # Volume, bound to the media keys in river/init
     pamixer
+    playerctl
   ];
 }
