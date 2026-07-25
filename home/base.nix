@@ -24,8 +24,6 @@ let
   configDirs = [
     "emacs"
     "fastfetch"
-    "foot"
-    "fuzzel"
     "kanshi"
     "mako"
     "river"
@@ -33,6 +31,15 @@ let
     "swayidle"
     "tmux"
     "zathura"
+  ];
+
+  # Linked file by file rather than as a directory, so that a machine can
+  # point one of them at a variant in the same directory (see
+  # home/Prometheus.nix). Overlaying a single file into a symlinked directory
+  # is not possible; overriding one of these entries is.
+  configFiles = [
+    "foot/foot.ini"
+    "fuzzel/fuzzel.ini"
   ];
 
   # Neovim is linked one subdirectory at a time rather than as a whole, so
@@ -95,7 +102,7 @@ in
       }
     ];
   };
-  xdg.configFile = lib.genAttrs (configDirs ++ nvimDirs) linkDotfile;
+  xdg.configFile = lib.genAttrs (configDirs ++ configFiles ++ nvimDirs) linkDotfile;
 
   home.stateVersion = "25.11";
 }
