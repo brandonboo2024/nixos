@@ -22,7 +22,6 @@
     desktopManager.plasma6.enable = true;
   };
 
-  networking.hostName = "Hephaestus"; # Define your hostname.
   # specific packages/ settings to be changed here
 
   # for nvidia driver

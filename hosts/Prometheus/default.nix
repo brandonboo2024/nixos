@@ -18,7 +18,6 @@
     ./sound.nix
     # ../modules/vm.nix
   ];
-  networking.hostName = "Prometheus"; # Define your hostname.
   # specific packages/ settings to be changed here
 
   # for nvidia driver

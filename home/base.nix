@@ -1,5 +1,6 @@
 {
   config,
+  lib,
   pkgs,
   pkgsStable,
   inputs,
@@ -7,24 +8,44 @@
 }:
 
 let
+  # Application config lives in the nested config/ dotfiles repository and is
+  # symlinked out of the store, so edits there take effect without a rebuild.
+  # See the README: that repository must be cloned to ~/nixos/config.
   dotfiles = "${config.home.homeDirectory}/nixos/config";
-  create_symlink = path: config.lib.file.mkOutOfStoreSymlink path;
-  configs = {
-    rofi = "rofi";
-    nvim = "nvim"; # uncomment after adding your own nvim config
-    fastfetch = "fastfetch";
-    tmux = "tmux";
-    zathura = "zathura";
-    emacs = "emacs";
-    foot = "foot";
-    river = "river";
-    kanshi = "kanshi";
-    fuzzel = "fuzzel";
-    mako = "mako";
-    swayidle = "swayidle";
+
+  # Link config/<subpath> to ~/.config/<subpath>. Exposed to the per-host
+  # profiles so they can add machine-specific links.
+  linkDotfile = subpath: {
+    source = config.lib.file.mkOutOfStoreSymlink "${dotfiles}/${subpath}";
+    recursive = true;
   };
+
+  # Linked whole, as ~/.config/<name>.
+  configDirs = [
+    "emacs"
+    "fastfetch"
+    "foot"
+    "fuzzel"
+    "kanshi"
+    "mako"
+    "river"
+    "rofi"
+    "swayidle"
+    "tmux"
+    "zathura"
+  ];
+
+  # Neovim is linked one subdirectory at a time rather than as a whole, so
+  # that ~/.config/nvim itself stays writable for anything nvim generates.
+  nvimDirs = [
+    "nvim/after"
+    "nvim/lua"
+    "nvim/plugin"
+  ];
 in
 {
+  _module.args = { inherit linkDotfile; };
+
   imports = [
     ./modules/packages.nix
     ./modules/nvim.nix
@@ -74,27 +95,7 @@ in
       }
     ];
   };
-  xdg.configFile =
-    (builtins.mapAttrs (name: subpath: {
-      source = create_symlink "${dotfiles}/${subpath}";
-      recursive = true;
-    }) (builtins.removeAttrs configs [ "nvim" ]))
-    // {
-      # Keep Neovim managed as directories so the Lua config stays portable.
-      "nvim/lua" = {
-        source = create_symlink "${dotfiles}/nvim/lua";
-        recursive = true;
-      };
-      "nvim/plugin" = {
-        source = create_symlink "${dotfiles}/nvim/plugin";
-        recursive = true;
-      };
-      "nvim/after" = {
-        source = create_symlink "${dotfiles}/nvim/after";
-        recursive = true;
-      };
-    };
-  # symlinking configs not done by nix language
+  xdg.configFile = lib.genAttrs (configDirs ++ nvimDirs) linkDotfile;
 
   home.stateVersion = "25.11";
 }

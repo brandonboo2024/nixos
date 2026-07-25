@@ -17,6 +17,5 @@
     ./hardware-configuration.nix
     ./nginx.nix
   ];
-  networking.hostName = "Daedalus"; # Define your hostname.
   # specific packages/ settings to be changed here
 }

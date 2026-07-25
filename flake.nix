@@ -62,17 +62,17 @@
       pkgsStable = mkPkgs nixpkgs-stable;
       pkgs = mkPkgs nixpkgs;
 
+      # Every machine is identified by one name, used as the flake
+      # configuration name, the hostname, the Home Manager username and the
+      # home directory. Everything below is derived from it, so there is
+      # nothing to keep in agreement by hand: to add a machine, create
+      # hosts/<Name>/ and home/<Name>.nix and add it to `hosts` below.
       mkHost =
-        {
-          hostModule,
-          username,
-          homeModule,
-          extraModule,
-        }:
+        hostName:
         nixpkgs.lib.nixosSystem {
           inherit system;
           specialArgs = {
-            inherit inputs pkgsStable;
+            inherit inputs pkgsStable hostName;
           };
           modules = [
             {
@@ -80,9 +80,10 @@
                 overlays = overlays;
                 config.allowUnfree = true;
               };
+              networking.hostName = hostName;
             }
 
-            hostModule
+            ./hosts/${hostName}
             home-manager.nixosModules.home-manager
             {
               home-manager = {
@@ -90,17 +91,25 @@
                 useUserPackages = true;
                 backupFileExtension = "backup";
                 extraSpecialArgs = {
-                  inherit inputs pkgsStable;
+                  inherit inputs pkgsStable hostName;
                 };
-                users.${username} = {
-                  imports = [
-                    homeModule
-                  ];
+                users.${hostName} = {
+                  imports = [ ./home/${hostName}.nix ];
+                  home.username = hostName;
+                  home.homeDirectory = "/home/${hostName}";
                 };
               };
             }
           ];
         };
+
+      # Machine name -> the device it runs on. The paths no longer say it, so
+      # this table is where that mapping lives.
+      hosts = {
+        Hephaestus = "Desktop";
+        Prometheus = "Yoga laptop";
+        Daedalus = "ThinkPad laptop";
+      };
     in
     {
       # `nix fmt` formats every tracked .nix file. nixfmt-tree is the treefmt
@@ -108,36 +117,6 @@
       # will not descend into the nested config/ dotfiles repository.
       formatter.${system} = pkgs.nixfmt-tree;
 
-      nixosConfigurations = {
-        # ThinkPad laptop
-        Daedalus = mkHost {
-          hostModule = ./hosts/Daedalus/default.nix;
-          username = "Daedalus";
-          homeModule = ./home/Daedalus.nix;
-          extraModule = [
-
-          ];
-        };
-
-        # Yoga laptop
-        Prometheus = mkHost {
-          hostModule = ./hosts/Prometheus/default.nix;
-          username = "Prometheus";
-          homeModule = ./home/Prometheus.nix;
-          extraModule = [
-
-          ];
-        };
-
-        # Desktop
-        Hephaestus = mkHost {
-          hostModule = ./hosts/Hephaestus/default.nix;
-          username = "Hephaestus";
-          homeModule = ./home/Hephaestus.nix;
-          extraModule = [
-
-          ];
-        };
-      };
+      nixosConfigurations = builtins.mapAttrs (hostName: _device: mkHost hostName) hosts;
     };
 }

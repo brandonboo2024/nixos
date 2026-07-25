@@ -1,31 +1,11 @@
-{
-  config,
-  pkgs,
-  pkgsStable,
-  inputs,
-  ...
-}:
+{ ... }:
 
-let
-  dotfiles = "${config.home.homeDirectory}/nixos/config";
-  create_symlink = path: config.lib.file.mkOutOfStoreSymlink path;
-  configs = {
-    # nvim = "nvim";  #add laptop specific configs here
-  };
-in
+# ThinkPad laptop. Username, home directory and the shared dotfile symlinks
+# come from home/base.nix and the flake; only Daedalus-specific settings go
+# here. To link an extra config directory on this machine only:
+#   xdg.configFile."foo" = linkDotfile "foo";   # helper lives in base.nix
 {
   imports = [
     ./base.nix
   ];
-  # symlinking configs not done by nix language
-  xdg.configFile = builtins.mapAttrs (name: subpath: {
-    source = create_symlink "${dotfiles}/${subpath}";
-    recursive = true;
-  }) configs;
-
-  home.username = "Daedalus";
-  home.homeDirectory = "/home/Daedalus";
-  # home.username="boo";
-  # home.homeDirectory = "/home/boo";
-  # home.stateVersion = "25.11";
 }
