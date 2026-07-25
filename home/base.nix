@@ -2,8 +2,6 @@
   config,
   lib,
   pkgs,
-  pkgsStable,
-  inputs,
   ...
 }:
 
@@ -26,7 +24,6 @@ let
     "fastfetch"
     "kanshi"
     "river"
-    "rofi"
     "scripts"
     "tmux"
   ];

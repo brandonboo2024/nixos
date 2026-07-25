@@ -1,4 +1,18 @@
-{ lib, pkgs, ... }:
+{ pkgs, ... }:
+
+# Only packages nothing else already pulls in. A service module that needs a
+# tool installs it as part of enabling the service, so listing it again here
+# is not belt and braces, it is a second copy that hides where the dependency
+# really comes from. Removed on those grounds:
+#
+#   bluez                     hardware.bluetooth.enable
+#   xwayland                  programs.river-classic.xwayland.enable
+#   xdg-desktop-portal-wlr    xdg.portal.extraPortals, set by river-classic
+#   xdg-desktop-portal-gtk    likewise
+#
+# xwayland-satellite went with them: it exists for compositors with no
+# XWayland of their own, and River has one. xkbcomp and xkeyboard-config are
+# X11-era; River takes its keymap through libxkbcommon.
 let
   desktopPackages = with pkgs; [
     vim
@@ -6,15 +20,8 @@ let
 
   systemTools = with pkgs; [
     wget
-    bluez
     bluez-tools
     brightnessctl
-    xwayland
-    xwayland-satellite
-    xkbcomp
-    xkeyboard-config
-    xdg-desktop-portal-wlr
-    xdg-desktop-portal-gtk
     pass
   ];
 
@@ -29,5 +36,5 @@ let
   ];
 in
 {
-  environment.systemPackages = lib.unique (desktopPackages ++ systemTools ++ devTools);
+  environment.systemPackages = desktopPackages ++ systemTools ++ devTools;
 }

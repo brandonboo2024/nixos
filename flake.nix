@@ -59,6 +59,13 @@
           config.allowUnfree = true;
         };
 
+      # Passed to every system and Home Manager module through specialArgs, so
+      # any module can substitute a single package from stable without the
+      # whole machine moving off unstable. A module opts in just by naming
+      # pkgsStable in its argument set; home/profiles/river.nix does this for
+      # creek, whose zig-wayland scanner does not build against unstable's
+      # wayland 1.26. Keeping the escape hatch is the point: this is the cheap
+      # way out when one package breaks on unstable.
       pkgsStable = mkPkgs nixpkgs-stable;
       pkgs = mkPkgs nixpkgs;
 
@@ -103,13 +110,14 @@
           ];
         };
 
-      # Machine name -> the device it runs on. The paths no longer say it, so
-      # this table is where that mapping lives.
-      hosts = {
-        Hephaestus = "Desktop";
-        Prometheus = "Yoga laptop";
-        Daedalus = "ThinkPad laptop";
-      };
+      # Which device each name is on is in the README's host table, which is
+      # where someone looks for it. Recording it here as well only gave a
+      # value that mapAttrs then had to discard.
+      hosts = [
+        "Hephaestus"
+        "Prometheus"
+        "Daedalus"
+      ];
     in
     {
       # `nix fmt` formats every tracked .nix file. nixfmt-tree is the treefmt
@@ -117,6 +125,6 @@
       # will not descend into the nested config/ dotfiles repository.
       formatter.${system} = pkgs.nixfmt-tree;
 
-      nixosConfigurations = builtins.mapAttrs (hostName: _device: mkHost hostName) hosts;
+      nixosConfigurations = nixpkgs.lib.genAttrs hosts mkHost;
     };
 }

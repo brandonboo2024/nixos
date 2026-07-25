@@ -1,5 +1,4 @@
 {
-  lib,
   pkgs,
   inputs,
   ...
@@ -26,17 +25,17 @@ let
     fastfetch
     p7zip
     skim
+    timewarrior # config/scripts/time-track, bound to prefix+t in tmux
     tmux
     unzip
   ];
 in
 {
-  home.packages = lib.unique (
+  home.packages =
     desktopApps
     ++ terminalTools
     ++ [
       inputs.pi_flake.packages.${pkgs.stdenv.hostPlatform.system}.default
       inputs.codex.packages.${pkgs.stdenv.hostPlatform.system}.default
-    ]
-  );
+    ];
 }

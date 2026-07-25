@@ -1,9 +1,4 @@
-{
-  lib,
-  config,
-  pkgs,
-  ...
-}:
+{ pkgs, ... }:
 
 let
   py = pkgs.python313.withPackages (
@@ -54,5 +49,5 @@ let
 
 in
 {
-  home.packages = lib.unique (lsps ++ utilities ++ languages);
+  home.packages = lsps ++ utilities ++ languages;
 }

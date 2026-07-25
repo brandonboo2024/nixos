@@ -1,29 +1,15 @@
-{
-  lib,
-  config,
-  pkgs,
-  ...
-}:
+{ ... }:
+
+# GPG_TTY, the starship init and the yazi `y` wrapper are not set here: each
+# of the modules below emits its own, and duplicating them in initExtra only
+# meant a second, worse copy (a PATH lookup for starship instead of a store
+# path, and a `y` that could recurse into its own alias).
 {
   programs.bash = {
     enable = true;
     shellAliases = {
       cat = "bat";
     };
-    initExtra = ''
-      export GPG_TTY=$(tty)
-      function y() {
-            local tmp="$(mktemp -t "yazi-cwd.XXXXXX")" cwd
-            yazi "$@" --cwd-file="$tmp"
-
-            IFS= read -r -d "" cwd < "$tmp"
-
-            [ -n "$cwd" ] && [ "$cwd" != "$PWD" ] && builtin cd -- "$cwd"
-            rm -f -- "$tmp"
-      }
-        
-      eval "$(starship init bash)"
-    '';
   };
   programs.starship = {
     enable = true;
