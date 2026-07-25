@@ -1,6 +1,14 @@
-{pkgs, config, lib, ...}:
 {
-  networking.firewall.allowedTCPPorts = [ 80 443 ];
+  pkgs,
+  config,
+  lib,
+  ...
+}:
+{
+  networking.firewall.allowedTCPPorts = [
+    80
+    443
+  ];
 
   services.nginx = {
     enable = true;

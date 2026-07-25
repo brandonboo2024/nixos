@@ -12,7 +12,6 @@ let
   configs = {
     rofi = "rofi";
     nvim = "nvim"; # uncomment after adding your own nvim config
-    mango = "mango";
     fastfetch = "fastfetch";
     tmux = "tmux";
     zathura = "zathura";
@@ -28,7 +27,6 @@ in
 {
   imports = [
     ./modules/HomePackages.nix
-    ./modules/kitty.nix
     ./modules/nvim.nix
     ./modules/firefox.nix
     ./modules/bash.nix

@@ -37,7 +37,7 @@
   # security and keyrings
   services.gnome.gnome-keyring.enable = true;
   security.polkit.enable = true;
-  
+
   services.power-profiles-daemon.enable = false;
   services.thermald.enable = true;
   services.auto-cpufreq.enable = true;

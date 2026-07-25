@@ -7,9 +7,9 @@
     enable = true;
     hooks.preNew = "mbsync -a";
     hooks.postNew = ''
-    notmuch tag +emacs -inbox -- to:emacs-devel@gnu.org or cc:emacs-devel@gnu.org
-    notmuch tag +linux -inbox -- to:linux-kernel@vger.kernel.org
-    notmuch tag +nix -inbox -- to:nix-devel@googlegroups.com
+      notmuch tag +emacs -inbox -- to:emacs-devel@gnu.org or cc:emacs-devel@gnu.org
+      notmuch tag +linux -inbox -- to:linux-kernel@vger.kernel.org
+      notmuch tag +nix -inbox -- to:nix-devel@googlegroups.com
     '';
   };
 

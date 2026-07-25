@@ -9,7 +9,9 @@ let
   py = pkgs.python313.withPackages (
     ps: with ps; [
       python-lsp-server
-      (python-lsp-black.overridePythonAttrs (_: { doCheck = false; }))
+      (python-lsp-black.overridePythonAttrs (_: {
+        doCheck = false;
+      }))
       pyflakes
       pycodestyle
       black

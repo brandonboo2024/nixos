@@ -1,4 +1,10 @@
-{config, pkgs, pkgsStable,inputs, ...}:
+{
+  config,
+  pkgs,
+  pkgsStable,
+  inputs,
+  ...
+}:
 
 let
   dotfiles = "${config.home.homeDirectory}/nixos/config";
@@ -17,11 +23,11 @@ in
     recursive = true;
   }) configs;
 
-	home.packages = with pkgs;[
+  home.packages = with pkgs; [
     inkscape
     steam
-	];
+  ];
 
-  home.username="Hephaestus";
+  home.username = "Hephaestus";
   home.homeDirectory = "/home/Hephaestus";
 }

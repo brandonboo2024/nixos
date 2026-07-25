@@ -1,5 +1,5 @@
 {
-  description = "Minimal NixOS with River-classic and KDE";
+  description = "Minimal NixOS with River and Emacs";
   nixConfig = {
     extra-substituters = [
       "https://nix-community.cachix.org"
@@ -103,6 +103,11 @@
         };
     in
     {
+      # `nix fmt` formats every tracked .nix file. nixfmt-tree is the treefmt
+      # wrapper around nixfmt: unlike bare nixfmt it honours .gitignore, so it
+      # will not descend into the nested config/ dotfiles repository.
+      formatter.${system} = pkgs.nixfmt-tree;
+
       nixosConfigurations = {
         Daedalus = mkHost {
           hostModule = ./hosts/thinkpad/default.nix;

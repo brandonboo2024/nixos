@@ -1,4 +1,10 @@
-{pkgs,config,inputs,lib,...}:
+{
+  pkgs,
+  config,
+  inputs,
+  lib,
+  ...
+}:
 {
   programs.wireshark = {
     enable = false;

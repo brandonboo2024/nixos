@@ -1,12 +1,17 @@
-{ lib, config, pkgs, ... }:
+{
+  lib,
+  config,
+  pkgs,
+  ...
+}:
 {
 
   programs.sioyek = {
     enable = true;
-    package = pkgs.symlinkJoin{
+    package = pkgs.symlinkJoin {
       name = "sioyek";
-      paths = [pkgs.sioyek];
-      buildInputs = [pkgs.makeWrapper];
+      paths = [ pkgs.sioyek ];
+      buildInputs = [ pkgs.makeWrapper ];
       postBuild = ''
         wrapProgram $out/bin/sioyek \
           --set QT_QPA_PLATFORM xcb \
@@ -15,13 +20,19 @@
     };
     bindings = {
       # movements
-      "screen_down" = ["J" "<c-d>" ];
-      "screen_up" = ["K" "<c-u>"];
-      "move_left" = ["l"];
-      "move_right" = ["h"];
+      "screen_down" = [
+        "J"
+        "<c-d>"
+      ];
+      "screen_up" = [
+        "K"
+        "<c-u>"
+      ];
+      "move_left" = [ "l" ];
+      "move_right" = [ "h" ];
 
       # rebind highlight as previously it was binded to "h"
-      "add_highlight" = ["H"];
+      "add_highlight" = [ "H" ];
     };
     config = {
       "should_launch_new_instance" = "1";

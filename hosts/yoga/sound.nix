@@ -1,35 +1,48 @@
 { config, pkgs, ... }:
 
 {
-	environment.systemPackages = with pkgs; [
-		util-linux
-		kmod
-		i2c-tools
-		bash
-		coreutils
-		gnugrep
-		gnused
-		gawk
-	];
+  environment.systemPackages = with pkgs; [
+    util-linux
+    kmod
+    i2c-tools
+    bash
+    coreutils
+    gnugrep
+    gnused
+    gawk
+  ];
 
-   boot.kernelModules = [ "i2c-dev" ];
+  boot.kernelModules = [ "i2c-dev" ];
 
-	 systemd.services.turn-on-speakers = {
-		 description = "Turn on speakers using i2c configuration";
+  systemd.services.turn-on-speakers = {
+    description = "Turn on speakers using i2c configuration";
 
-		 wantedBy = [ "multi-user.target" "sleep.target" ];
-     after = [ "suspend.target" "hibernate.target" "hybrid-sleep.target" "suspend-then-hibernate.target" ];
+    wantedBy = [
+      "multi-user.target"
+      "sleep.target"
+    ];
+    after = [
+      "suspend.target"
+      "hibernate.target"
+      "hybrid-sleep.target"
+      "suspend-then-hibernate.target"
+    ];
 
-		 path = with pkgs; [ kmod i2c-tools util-linux coreutils ];
+    path = with pkgs; [
+      kmod
+      i2c-tools
+      util-linux
+      coreutils
+    ];
 
-		 serviceConfig = {
-			 Type = "oneshot";
-       User = "root";
+    serviceConfig = {
+      Type = "oneshot";
+      User = "root";
 
-			 ExecStart = "${pkgs.bash}/bin/bash ${./2pa-byps.sh}";
-		 };
-	 };
-    
+      ExecStart = "${pkgs.bash}/bin/bash ${./2pa-byps.sh}";
+    };
+  };
+
   boot.blacklistedKernelModules = [
     "snd_hda_scodec_tas2781_i2c"
   ];

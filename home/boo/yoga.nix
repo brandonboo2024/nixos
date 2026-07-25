@@ -1,4 +1,10 @@
-{config, pkgs, pkgsStable,inputs, ...}:
+{
+  config,
+  pkgs,
+  pkgsStable,
+  inputs,
+  ...
+}:
 
 let
   dotfiles = "${config.home.homeDirectory}/nixos/config";
@@ -18,12 +24,12 @@ in
     recursive = true;
   }) configs;
 
-  home.username="Prometheus";
+  home.username = "Prometheus";
   home.homeDirectory = "/home/Prometheus";
 
-	home.packages = with pkgs;[
+  home.packages = with pkgs; [
     zoom-us
-	];
+  ];
 
   # home.username="boo";
   # home.homeDirectory = "/home/boo";

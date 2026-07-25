@@ -30,9 +30,5 @@ let
   ];
 in
 {
-  environment.systemPackages = lib.unique (
-    desktopPackages
-    ++ systemTools
-    ++ devTools
-  );
+  environment.systemPackages = lib.unique (desktopPackages ++ systemTools ++ devTools);
 }
