@@ -55,10 +55,41 @@
   # and power-profiles-daemon both drive the CPU governor.
   services.power-profiles-daemon.enable = false;
 
-  nix.settings.experimental-features = [
-    "nix-command"
-    "flakes"
-  ];
+  nix.settings = {
+    experimental-features = [
+      "nix-command"
+      "flakes"
+    ];
+
+    # Declared here rather than only in the flake's nixConfig. nixConfig is a
+    # client-specified setting, so the daemon honours it for trusted users
+    # alone: as an ordinary user every `nix build` and `nix flake check` was
+    # answered with "ignoring untrusted substituter" and built from source.
+    # Set as a system setting these apply to every caller, root or not.
+    substituters = [
+      "https://nix-community.cachix.org"
+      "https://claude-code.cachix.org"
+    ];
+    trusted-public-keys = [
+      "nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs="
+      "claude-code.cachix.org-1:YeXf2aNu7UTX8Vwrze0za1WEDS+4DuI2kVeWEE4fsRk="
+    ];
+
+    # So a flake that brings its own nixConfig is honoured too, instead of
+    # being silently dropped the way the two above were.
+    trusted-users = [
+      "root"
+      "@wheel"
+    ];
+  };
+
+  # Hardlink identical files in the store. Scheduled rather than
+  # nix.settings.auto-optimise-store, which hashes on every store write and
+  # slows builds down; this does the same work once, off-peak.
+  nix.optimise = {
+    automatic = true;
+    dates = [ "03:00" ];
+  };
 
   system.stateVersion = "25.11"; # just dont touch this
 }
