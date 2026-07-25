@@ -61,11 +61,16 @@
       "flakes"
     ];
 
-    # Declared here rather than only in the flake's nixConfig. nixConfig is a
-    # client-specified setting, so the daemon honours it for trusted users
-    # alone: as an ordinary user every `nix build` and `nix flake check` was
-    # answered with "ignoring untrusted substituter" and built from source.
-    # Set as a system setting these apply to every caller, root or not.
+    # Declared here as well as in the flake's nixConfig, which is not
+    # redundant: nixConfig is a client-specified setting, so the daemon
+    # honours it for trusted users alone. As an ordinary user every
+    # `nix build` and `nix flake check` was answered with "ignoring untrusted
+    # substituter" and went on to build from source. Set as a system setting
+    # these apply to every caller, root or not.
+    #
+    # The flake's copy still earns its place: it is all a machine has before
+    # its first switch, when this file is not yet on disk anywhere. See the
+    # comment there. The two lists have to be edited together.
     substituters = [
       "https://nix-community.cachix.org"
       "https://claude-code.cachix.org"

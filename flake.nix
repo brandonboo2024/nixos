@@ -1,5 +1,17 @@
 {
   description = "Minimal NixOS with River and Emacs";
+
+  # Duplicated in hosts/base.nix, and deliberately so. This copy is the only
+  # one that exists before a machine has switched: `nixos-install --flake` off
+  # an installer ISO reads it, runs as root, and root is trusted by default,
+  # so the first build of emacs-git-pgtk and claude-code comes from a cache
+  # instead of from source. hosts/base.nix takes over from the first switch
+  # onward and covers every user rather than only trusted ones.
+  #
+  # Keeping the two in step is manual: nixConfig is read by the Nix CLI before
+  # the flake is evaluated, so it cannot see a `let` binding (flake.nix must be
+  # a literal attribute set) and it is not exposed on `self` for the modules to
+  # read back. There is no way to write the list once. Change one, change both.
   nixConfig = {
     extra-substituters = [
       "https://nix-community.cachix.org"
