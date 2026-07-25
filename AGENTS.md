@@ -32,6 +32,24 @@ Generated state is a different matter. Native-compilation and package caches
 belong under `$XDG_DATA_HOME` / `$XDG_STATE_HOME`, never inside `config/`, and
 may be removed once they are confirmed to be duplicates of the live location.
 
+"Duplicate" means nothing outside the directory depends on it, not merely that
+the bytes match. Before removing one, check that the copy meant to survive does
+not reach back into it:
+
+```sh
+find <surviving-copy> -type l -lname '*<path-being-deleted>*'
+```
+
+`diff -rq` cannot answer this. When both copies contain symlinks with the same
+absolute target, diff resolves each side to the same file and reports them
+identical, which is exactly what a tree that depends on the doomed path looks
+like. straight.el builds this way: `straight/build/` is symlinks into
+`straight/repos/`, so a copied tree keeps pointing at the original.
+
+If that check is skipped and the links are already broken, `straight/build/`
+and `straight/build-cache.el` are wholly derived and can be regenerated from
+`straight/repos/` by moving both aside and loading the config once.
+
 ## Validation
 
 Run the smallest relevant checks while working. Before handing off Nix or Home
