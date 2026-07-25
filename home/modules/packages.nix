@@ -46,15 +46,12 @@ let
     claude-code
   ];
 
-  deploymentTools = with pkgs; [
-  ];
 in
 {
   home.packages = lib.unique (
     desktopPackages
     ++ waylandTools
     ++ terminalTools
-    ++ deploymentTools
     ++ [
       inputs.pi_flake.packages.${pkgs.stdenv.hostPlatform.system}.default
       inputs.codex.packages.${pkgs.stdenv.hostPlatform.system}.default

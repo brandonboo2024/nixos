@@ -37,8 +37,14 @@ sudo nixos-rebuild switch --flake ~/nixos#<hostname>
 
 Without the second clone every `~/.config` symlink dangles.
 
-Some flake inputs are personal (assets, `pi_flake`); remove them from
-`flake.nix` if you do not want them.
+Three flake inputs are personal and are referenced unconditionally, so
+dropping one means removing its use as well, not just the input:
+
+| input | used by |
+| --- | --- |
+| `assets` | `hosts/modules/fonts.nix` (Berkeley Mono) |
+| `pi_flake` | `home/modules/packages.nix` |
+| `codex` | `home/modules/packages.nix` |
 
 ## Layout
 
