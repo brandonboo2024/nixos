@@ -17,7 +17,7 @@
   # power-profiles-daemon is off everywhere (see hosts/base.nix). Pin the
   # governor instead, so the desktop keeps running flat out. amd-pstate-epp
   # offers only "performance" and "powersave".
-  powerManagement.cpuFreqGovernor = "performance";
+  powerManagement.cpuFreqGovernor = "powersave";
 
   hardware.nvidia.powerManagement = {
     enable = true;
