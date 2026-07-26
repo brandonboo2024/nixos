@@ -32,7 +32,7 @@ let
     nil
     typescript-language-server
     vscode-css-languageserver
-    # zls
+    zls
     vscode-json-languageserver
     # jdt-language-server
     py
@@ -45,6 +45,10 @@ let
   languages = with pkgs; [
     zig
     typst
+    # rust-analyzer above cannot resolve a sysroot without these, so it was
+    # installed but non-functional.
+    rustc
+    cargo
   ];
 
 in
