@@ -58,6 +58,7 @@ in
     ./modules/sioyek.nix
     ./modules/emacs.nix
     ./modules/dev.nix
+    ./modules/direnv.nix
     ./modules/mail.nix
   ];
   programs.git = {

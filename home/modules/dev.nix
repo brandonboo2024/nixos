@@ -14,6 +14,7 @@ let
     ]
   );
   utilities = with pkgs; [
+    direnv
     ripgrep
     fd
     fzf
@@ -49,6 +50,7 @@ let
     # installed but non-functional.
     rustc
     cargo
+    clippy
   ];
 
 in

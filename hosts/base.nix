@@ -1,4 +1,4 @@
-{ pkgs, ... }:
+{ ... }:
 
 # Settings every machine gets. Anything that only some machines want belongs
 # in a module under hosts/modules/ (imported by the hosts that want it) or in
@@ -28,8 +28,6 @@
   time.timeZone = "Asia/Singapore";
 
   environment = {
-    # Where clangd should look for the glibc headers.
-    etc."clangd/glibc/include".source = "${pkgs.stdenv.cc.libc.dev}/include";
     variables = {
       # emacsclient, not emacs: River starts an Emacs daemon, and a bare
       # `emacs` here would give every caller -- git, claude, codex -- a cold
