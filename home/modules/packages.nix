@@ -18,10 +18,6 @@ let
     whatsapp-electron
   ];
 
-  # Thumbnailers and metadata readers. Emacs' dirvish shells out to these for
-  # file previews and silently drops the dispatcher when the binary is absent,
-  # so a missing entry here shows up as a preview pane that renders nothing
-  # rather than as an error. p7zip below already covers archive previews.
   previewTools = with pkgs; [
     ffmpegthumbnailer # video
     mediainfo # audio
