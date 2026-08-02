@@ -30,9 +30,9 @@ let
     chafa
     claude-code
     fastfetch
+    nh
     p7zip
     skim
-    timewarrior # config/scripts/time-track, bound to prefix+t in tmux
     tmux
     unzip
   ];
