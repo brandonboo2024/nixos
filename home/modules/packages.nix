@@ -35,6 +35,7 @@ let
     skim
     tmux
     unzip
+    jq
   ];
 in
 {
