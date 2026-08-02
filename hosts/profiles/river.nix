@@ -8,6 +8,14 @@
 # matter of importing a different profile instead of editing shared settings.
 # XDG_CURRENT_DESKTOP in particular is a claim about the running session and
 # would simply be false under anything else.
+let
+  riverSession = pkgs.writeShellScript "river-session" ''
+    ${pkgs.river-classic}/bin/river
+    river_status=$?
+    ${pkgs.systemd}/bin/systemctl --user stop river-session.target
+    exit "$river_status"
+  '';
+in
 {
   programs.river-classic = {
     enable = true;
@@ -31,7 +39,7 @@
     enable = true;
     settings = {
       default_session = {
-        command = "${pkgs.tuigreet}/bin/tuigreet --time --remember --asterisks --cmd river";
+        command = "${pkgs.tuigreet}/bin/tuigreet --time --remember --asterisks --cmd ${riverSession}";
       };
     };
   };
