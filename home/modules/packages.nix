@@ -11,6 +11,8 @@ let
   # currently want the same ones; split only if that stops being true.
   desktopApps = with pkgs; [
     easyeffects
+    imv
+    mpv
     obsidian
     spotify
     telegram-desktop
@@ -30,7 +32,10 @@ let
     chafa
     claude-code
     fastfetch
+    gh
+    htop
     nh
+    nix-tree
     p7zip
     skim
     tmux

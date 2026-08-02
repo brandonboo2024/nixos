@@ -37,11 +37,13 @@
     };
   };
 
-  # Not session-specific: whatever the desktop, sioyek opens PDFs. Its
-  # Exec is `sioyek %f`, resolved through PATH, so this works whether or not
-  # the machine installed the xcb-wrapped build (see home/modules/sioyek.nix).
+  # Default handlers for PDFs and the image and video formats used by Yazi.
   xdg.mime.defaultApplications = {
     "application/pdf" = [ "sioyek.desktop" ];
+    "image/png" = [ "imv.desktop" ];
+    "image/jpeg" = [ "imv.desktop" ];
+    "video/mp4" = [ "mpv.desktop" ];
+    "video/x-matroska" = [ "mpv.desktop" ];
   };
 
   services.printing.enable = false;

@@ -50,6 +50,7 @@ in
     extraArgs = [ "-w" ];
     systemdTargets = [ riverSessionTarget ];
   };
+  services.wob.enable = true;
   systemd.user.services.swayidle.Service.Environment = lib.mkForce [
     "PATH=${swayidlePath}:${config.xdg.configHome}/scripts"
   ];
@@ -86,7 +87,7 @@ in
     grim
     slurp
 
-    # Volume, bound to the media keys in river/init
+    # Volume and media controls, bound in river/reload
     pamixer
     playerctl
   ];

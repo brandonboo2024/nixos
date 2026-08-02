@@ -18,6 +18,8 @@ let
     ripgrep
     fd
     fzf
+    shellcheck
+    nixfmt
     (texliveSmall.withPackages (ps: [
       ps.scheme-basic
       ps.ulem
@@ -30,7 +32,7 @@ let
     # Language Servers
     # nixpkgs-fmt
     lua-language-server
-    nil
+    nixd
     typescript-language-server
     vscode-css-languageserver
     zls
@@ -44,6 +46,7 @@ let
   ];
 
   languages = with pkgs; [
+    guile
     zig
     typst
     # rust-analyzer above cannot resolve a sysroot without these, so it was
