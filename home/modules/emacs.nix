@@ -6,12 +6,8 @@
     package = pkgs.emacs-git-pgtk;
     extraPackages =
       epkgs: with epkgs; [
-        pdf-tools
         notmuch
         jinx
-        (treesit-grammars.with-grammars (grammars: [
-          grammars.tree-sitter-rust
-        ]))
       ];
   };
 
