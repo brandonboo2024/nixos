@@ -18,6 +18,7 @@ let
     telegram-desktop
     vesktop
     whatsapp-electron
+    slack
   ];
 
   previewTools = with pkgs; [

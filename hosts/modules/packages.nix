@@ -1,4 +1,4 @@
-{ pkgs, ... }:
+{ lib, pkgs, ... }:
 
 # Only packages nothing else already pulls in. A service module that needs a
 # tool installs it as part of enabling the service, so listing it again here
@@ -27,7 +27,10 @@ let
 
   devTools = with pkgs; [
     clang-tools
-    llvmPackages_latest.clang
+    # Both compiler wrappers provide cc/c++; keep Clang on the generic names
+    # while exposing the GNU compiler through gcc/g++.
+    (lib.hiPrio llvmPackages_latest.clang)
+    gcc
     bear
     gnumake
     gdb
