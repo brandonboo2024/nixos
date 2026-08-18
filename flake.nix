@@ -23,6 +23,10 @@
     ];
   };
   inputs = {
+    # Keep kernel updates deliberate and independent from ordinary flake
+    # updates. This revision exposes Linux 7.1.5 as linuxPackages_7_1, the
+    # newest version verified end to end on Prometheus.
+    nixpkgs-kernel.url = "github:NixOS/nixpkgs/148bab9c1c3c53136ecb44a6ea356a0ed5b39b06";
     nixpkgs-stable.url = "nixpkgs/nixos-25.11";
     nixpkgs.url = "nixpkgs/nixos-unstable";
     home-manager = {
@@ -54,6 +58,7 @@
     inputs@{
       nixpkgs,
       home-manager,
+      nixpkgs-kernel,
       nixpkgs-stable,
       ...
     }:
@@ -79,6 +84,13 @@
       # wayland 1.26. Keeping the escape hatch is the point: this is the cheap
       # way out when one package breaks on unstable.
       pkgsStable = mkPkgs nixpkgs-stable;
+      # Kernel package sets must stay free of application overlays. In
+      # particular, this keeps the kernel and its out-of-tree modules exactly
+      # as built by the pinned nixpkgs revision.
+      pkgsKernel = import nixpkgs-kernel {
+        inherit system;
+        config.allowUnfree = true;
+      };
       pkgs = mkPkgs nixpkgs;
 
       # Every machine is identified by one name, used as the flake
@@ -91,7 +103,12 @@
         nixpkgs.lib.nixosSystem {
           inherit system;
           specialArgs = {
-            inherit inputs pkgsStable hostName;
+            inherit
+              inputs
+              pkgsKernel
+              pkgsStable
+              hostName
+              ;
           };
           modules = [
             {

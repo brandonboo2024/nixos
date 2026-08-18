@@ -13,6 +13,7 @@
     ./modules/bluetooth.nix
     ./modules/bootloader.nix
     ./modules/fonts.nix
+    ./modules/kernel.nix
     ./modules/maintenance.nix
     ./modules/users.nix
   ];

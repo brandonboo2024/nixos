@@ -66,10 +66,6 @@ let
   '';
 in
 {
-  # Linux 7.1 carries the codec-SSID quirk that selects the TAS2781 driver for
-  # this exact Yoga Pro 9 16IMH9 instead of the conflicting Legion fixup.
-  boot.kernelPackages = pkgs.linuxPackages_latest;
-
   systemd.services.tas2781-native-init = {
     description = "Reset, bind, and arm the native TAS2781 speaker driver";
 
