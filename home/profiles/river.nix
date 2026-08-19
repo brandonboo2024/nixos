@@ -1,6 +1,7 @@
 {
   config,
   lib,
+  linkDotfile,
   pkgs,
   pkgsStable,
   ...
@@ -30,6 +31,12 @@ in
   #
   # To use a different one on a machine, override this in home/<Host>.nix.
   xdg.configFile."wallpaper".source = ../../walls/vague.png;
+
+  # Fnott is D-Bus activated and follows the River-specific systemd target
+  # selected below. Keep its portable, mutable configuration in the nested
+  # dotfiles checkout rather than using Home Manager's generated store file.
+  services.fnott.enable = true;
+  xdg.configFile."fnott/fnott.ini" = lib.mkForce (linkDotfile "fnott/fnott.ini");
 
   # River imports its display environment before starting this target. Keeping
   # the target compositor-specific prevents graphical services from leaking
@@ -76,7 +83,6 @@ in
     # Terminal, launcher, notifications
     foot
     fuzzel
-    mako
     libnotify
     networkmanager_dmenu
 

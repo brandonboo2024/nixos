@@ -20,8 +20,6 @@
   # config/river/hosts/Prometheus.sh.
   xdg.configFile."foot/foot.ini" = lib.mkForce (linkDotfile "foot/foot.Prometheus.ini");
   xdg.configFile."fuzzel/fuzzel.ini" = lib.mkForce (linkDotfile "fuzzel/fuzzel.Prometheus.ini");
-  xdg.configFile."mako/config" = lib.mkForce (linkDotfile "mako/config.Prometheus");
-
 
   xdg.configFile."wallpaper".source = lib.mkForce ../walls/town.png;
 

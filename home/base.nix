@@ -35,7 +35,6 @@ let
   configFiles = {
     "foot/foot.ini" = "foot/foot.default.ini";
     "fuzzel/fuzzel.ini" = "fuzzel/fuzzel.default.ini";
-    "mako/config" = "mako/config.default";
     "swayidle/config" = "swayidle/config.default";
   };
 

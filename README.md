@@ -9,7 +9,7 @@ Specs:
 - **Terminal:** [Foot](https://codeberg.org/dnkl/foot)
 - **File manager:** [Yazi](https://yazi-rs.github.io/)
 - **App launcher:** [Fuzzel](https://codeberg.org/dnkl/fuzzel)
-- **Notifications:** [Mako](https://github.com/emersion/mako)
+- **Notifications:** [Fnott](https://codeberg.org/dnkl/fnott)
 
 ## Hosts
 
