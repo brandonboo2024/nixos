@@ -7,7 +7,7 @@
 {
   fonts.packages = with pkgs; [
     inputs.assets.packages.${pkgs.stdenv.hostPlatform.system}.default
-    et-book
+    (ibm-plex.override { families = [ "serif" ]; })
     nerd-fonts.jetbrains-mono
     nerd-fonts.symbols-only
     noto-fonts-color-emoji
