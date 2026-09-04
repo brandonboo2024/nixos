@@ -26,7 +26,11 @@ let
       ps.amsmath
       ps.dvipng
       ps.dvisvgm
+      ps.latexmk
+      ps.chktex
     ]))
+    # mysql
+    mycli
   ];
   lsps = with pkgs; [
     # Language Servers

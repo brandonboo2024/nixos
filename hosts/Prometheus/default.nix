@@ -10,6 +10,7 @@
     ../profiles/laptop.nix
     ../modules/nvidia.nix
     ./sound.nix
+    ../modules/vm.nix
   ];
 
   hardware.nvidia.prime = {

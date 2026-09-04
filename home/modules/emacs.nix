@@ -6,6 +6,8 @@
     package = pkgs.emacs-git-pgtk;
     extraPackages =
       epkgs: with epkgs; [
+        auctex
+        auctex-latexmk
         notmuch
         jinx
       ];
