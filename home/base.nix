@@ -62,6 +62,7 @@ in
   ];
   programs.git = {
     enable = true;
+    lfs.enable = true;
     package = pkgs.gitFull;
     settings = {
       user = {

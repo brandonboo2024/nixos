@@ -1,4 +1,4 @@
-{ pkgs, ... }:
+{ config, lib, pkgs, ... }:
 
 # Everything that makes a machine a River machine: the compositor, the login
 # command that starts it, and the environment a Wayland session needs.
@@ -10,6 +10,14 @@
 # would simply be false under anything else.
 let
   riverSession = pkgs.writeShellScript "river-session" ''
+    ${lib.optionalString (config.networking.hostName == "Prometheus") ''
+      # Restrict River to Intel while retaining NVIDIA application offload.
+      # Resolve the PCI path because WLR_DRM_DEVICES uses colons as separators.
+      intel_drm="$(${pkgs.coreutils}/bin/readlink -e \
+        /dev/dri/by-path/pci-0000:00:02.0-card)" || exit 1
+      export WLR_DRM_DEVICES="$intel_drm"
+    ''}
+
     ${pkgs.river-classic}/bin/river
     river_status=$?
     ${pkgs.systemd}/bin/systemctl --user stop river-session.target

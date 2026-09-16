@@ -21,6 +21,12 @@
   xdg.configFile."foot/foot.ini" = lib.mkForce (linkDotfile "foot/foot.Prometheus.ini");
   xdg.configFile."fuzzel/fuzzel.ini" = lib.mkForce (linkDotfile "fuzzel/fuzzel.Prometheus.ini");
 
+  # Output priorities and jack-driven profiles for this laptop only.
+  xdg.configFile."wireplumber/wireplumber.conf.d/51-output-routing.conf" =
+    linkDotfile "wireplumber/Prometheus.conf";
+  xdg.dataFile."wireplumber/scripts/prometheus-output-profile.lua" =
+    linkDotfile "wireplumber/scripts/prometheus-output-profile.lua";
+
   xdg.configFile."wallpaper".source = lib.mkForce ../walls/town.png;
 
   home.packages = with pkgs; [
