@@ -24,10 +24,13 @@ let
       ps.scheme-basic
       ps.ulem
       ps.amsmath
+      ps.wrapfig
+      ps.capt-of
       ps.dvipng
       ps.dvisvgm
       ps.latexmk
       ps.chktex
+      ps.minted
     ]))
     # mysql
     mycli
@@ -35,12 +38,12 @@ let
   lsps = with pkgs; [
     # Language Servers
     # nixpkgs-fmt
-    lua-language-server
+    # lua-language-server
     nixd
-    typescript-language-server
-    vscode-css-languageserver
+    # typescript-language-server
+    # vscode-css-languageserver
     zls
-    vscode-json-languageserver
+    # vscode-json-languageserver
     # jdt-language-server
     py
     rust-analyzer
@@ -53,8 +56,6 @@ let
     guile
     zig
     typst
-    # rust-analyzer above cannot resolve a sysroot without these, so it was
-    # installed but non-functional.
     rustc
     cargo
     clippy

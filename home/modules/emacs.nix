@@ -10,6 +10,7 @@
         auctex-latexmk
         notmuch
         jinx
+        zmq
       ];
   };
 
