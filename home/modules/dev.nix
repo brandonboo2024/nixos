@@ -13,6 +13,9 @@ let
       scipy
     ]
   );
+  # TeX Live bundles latexminted 0.6.0, which does not support Python 3.14.
+  minted = (pkgs.texlive.override { python3 = pkgs.python313; }).pkgs.minted;
+
   utilities = with pkgs; [
     direnv
     ripgrep
@@ -30,7 +33,7 @@ let
       ps.dvisvgm
       ps.latexmk
       ps.chktex
-      ps.minted
+      minted
     ]))
     # mysql
     mycli
