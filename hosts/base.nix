@@ -74,11 +74,11 @@
     # comment there. The two lists have to be edited together.
     substituters = [
       "https://nix-community.cachix.org"
-      "https://claude-code.cachix.org"
+      "https://cache.numtide.com"
     ];
     trusted-public-keys = [
       "nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs="
-      "claude-code.cachix.org-1:YeXf2aNu7UTX8Vwrze0za1WEDS+4DuI2kVeWEE4fsRk="
+      "niks3.numtide.com-1:DTx8wZduET09hRmMtKdQDxNNthLQETkc/yaX7M4qK0g="
     ];
 
     # So a flake that brings its own nixConfig is honoured too, instead of

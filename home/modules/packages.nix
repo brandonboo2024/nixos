@@ -32,7 +32,6 @@ let
   terminalTools = with pkgs; [
     bat
     chafa
-    claude-code
     fastfetch
     gh
     htop
@@ -52,6 +51,10 @@ in
     ++ previewTools
     ++ [
       inputs.pi_flake.packages.${pkgs.stdenv.hostPlatform.system}.default
-      inputs.codex.packages.${pkgs.stdenv.hostPlatform.system}.default
-    ];
+    ]
+    ++ (with inputs.llm-agents.packages.${pkgs.stdenv.hostPlatform.system}; [
+      antigravity-cli
+      claude-code
+      codex
+    ]);
 }

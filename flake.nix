@@ -4,7 +4,7 @@
   # Duplicated in hosts/base.nix, and deliberately so. This copy is the only
   # one that exists before a machine has switched: `nixos-install --flake` off
   # an installer ISO reads it, runs as root, and root is trusted by default,
-  # so the first build of emacs-git-pgtk and claude-code comes from a cache
+  # so the first build of emacs-git-pgtk and the coding agents comes from a cache
   # instead of from source. hosts/base.nix takes over from the first switch
   # onward and covers every user rather than only trusted ones.
   #
@@ -15,11 +15,11 @@
   nixConfig = {
     extra-substituters = [
       "https://nix-community.cachix.org"
-      "https://claude-code.cachix.org"
+      "https://cache.numtide.com"
     ];
     extra-trusted-public-keys = [
       "nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs="
-      "claude-code.cachix.org-1:YeXf2aNu7UTX8Vwrze0za1WEDS+4DuI2kVeWEE4fsRk="
+      "niks3.numtide.com-1:DTx8wZduET09hRmMtKdQDxNNthLQETkc/yaX7M4qK0g="
     ];
   };
   inputs = {
@@ -45,14 +45,9 @@
       url = "github:nix-community/emacs-overlay";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    codex = {
-      url = "github:sadjow/codex-cli-nix";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-    claude = {
-      url = "github:sadjow/claude-code-nix";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
+    # One source for the coding-agent CLIs. Its nixpkgs is deliberately not
+    # followed so the builds match what cache.numtide.com serves.
+    llm-agents.url = "github:numtide/llm-agents.nix";
   };
   outputs =
     inputs@{
@@ -66,7 +61,6 @@
       system = "x86_64-linux";
       overlays = [
         inputs.emacs-overlay.overlays.default
-        inputs.claude.overlays.default
       ];
 
       mkPkgs =
