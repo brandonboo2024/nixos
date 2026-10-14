@@ -19,7 +19,7 @@ let
     vesktop
     whatsapp-electron
     slack
-    webex
+    webex 
   ];
 
   previewTools = with pkgs; [

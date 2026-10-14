@@ -9,6 +9,7 @@
     ../profiles/river.nix
     ../modules/nvidia.nix
     ../modules/vm.nix
+    ../modules/wireshark.nix
   ];
 
   services.desktopManager.plasma6.enable = true;
