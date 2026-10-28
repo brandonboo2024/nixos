@@ -10,6 +10,7 @@
     ../modules/nvidia.nix
     ../modules/vm.nix
     ../modules/wireshark.nix
+    ../modules/ssh-server.nix
   ];
 
   services.desktopManager.plasma6.enable = true;
