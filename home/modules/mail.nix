@@ -61,6 +61,7 @@
     enable = true;
     extraConfig = ''
       pinentry-program ${pkgs.pinentry-curses}/bin/pinentry-tty
+      allow-loopback-pinentry
     '';
     maxCacheTtl = 86400;
     defaultCacheTtl = 86400;

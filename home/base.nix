@@ -22,6 +22,7 @@ let
     "emacs"
     "fastfetch"
     "kanshi"
+    "networkmanager-dmenu"
     "river"
     "scripts"
     "tmux"
@@ -30,7 +31,9 @@ let
   # Target path -> default source, linked per file so a host can mkForce its
   # own variant (see home/Prometheus.nix, home/Hephaestus.nix).
   configFiles = {
+    "foot/common.ini" = "foot/common.ini";
     "foot/foot.ini" = "foot/foot.default.ini";
+    "fuzzel/common.ini" = "fuzzel/common.ini";
     "fuzzel/fuzzel.ini" = "fuzzel/fuzzel.default.ini";
     "swayidle/config" = "swayidle/config.default";
   };
@@ -56,6 +59,10 @@ in
     ./modules/direnv.nix
     ./modules/mail.nix
   ];
+  programs.delta = {
+    enable = true;
+    enableGitIntegration = true;
+  };
   programs.git = {
     enable = true;
     lfs.enable = true;
