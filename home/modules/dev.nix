@@ -19,7 +19,6 @@ let
   utilities = with pkgs; [
     ripgrep
     fd
-    fzf
     shellcheck
     nixfmt
     (texliveSmall.withPackages (ps: [
