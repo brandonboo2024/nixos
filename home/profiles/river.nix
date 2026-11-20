@@ -63,6 +63,7 @@ in
     # Compositor furniture
     bibata-cursors
     kanshi
+    lswt
     swaybg
     swaylock
     pkgsStable.creek # pinned to stable: unstable's wayland 1.26 breaks creek's zig-wayland scanner

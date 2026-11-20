@@ -36,7 +36,6 @@ let
     htop
     nix-tree
     p7zip
-    skim
     tmux
     unzip
     jq

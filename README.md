@@ -37,14 +37,13 @@ sudo nixos-rebuild switch --flake ~/nixos#<hostname>
 
 Without the second clone every `~/.config` symlink dangles.
 
-Three flake inputs are personal and are referenced unconditionally, so
+Two flake inputs are personal and are referenced unconditionally, so
 dropping one means removing its use as well, not just the input:
 
 | input | used by |
 | --- | --- |
 | `assets` | `hosts/modules/fonts.nix` (Berkeley Mono) |
 | `pi_flake` | `home/modules/packages.nix` |
-| `codex` | `home/modules/packages.nix` |
 
 ## Layout
 
@@ -52,9 +51,11 @@ dropping one means removing its use as well, not just the input:
 flake.nix          inputs, overlays, host wiring
 hosts/base.nix     settings shared by every machine
 hosts/modules/     opt-in system modules
+hosts/profiles/    shared system profiles (laptop, river)
 hosts/<Host>/      hardware and machine-specific settings
 home/base.nix      shared Home Manager configuration
 home/modules/      per-application Home Manager modules
+home/profiles/     shared Home Manager profiles (river)
 home/<Host>.nix    per-machine Home Manager settings
 walls/             wallpapers
 config/            dotfiles repository (nested, not tracked here)

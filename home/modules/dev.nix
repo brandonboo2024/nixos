@@ -17,7 +17,6 @@ let
   minted = (pkgs.texlive.override { python3 = pkgs.python313; }).pkgs.minted;
 
   utilities = with pkgs; [
-    direnv
     ripgrep
     fd
     fzf

@@ -22,7 +22,6 @@
   services.gnome.gnome-keyring.enable = true;
   security.polkit.enable = true;
 
-  nixpkgs.config.allowUnfree = true;
   time.timeZone = "Asia/Singapore";
 
   environment = {

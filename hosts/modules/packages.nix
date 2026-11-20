@@ -10,7 +10,6 @@ let
 
   systemTools = with pkgs; [
     wget
-    bluez-tools
     brightnessctl
     pass
   ];
@@ -25,7 +24,6 @@ let
     gnumake
     gdb
     pinentry-curses
-    # wireshark
   ];
 in
 {

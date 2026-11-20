@@ -61,6 +61,10 @@ in
     lfs.enable = true;
     package = pkgs.gitFull;
     settings = {
+      init.defaultBranch = "main";
+      fetch.prune = true;
+      diff.algorithm = "histogram";
+      merge.conflictStyle = "zdiff3";
       user = {
         name = "jwboo";
         email = "jwboo@posteo.com";
@@ -86,7 +90,8 @@ in
           };
         })
         [
-          "~/102_school_proj/"
+          "~/102_school_work/"
+          "~/103_school_proj/"
           "~/work/"
         ];
   };
