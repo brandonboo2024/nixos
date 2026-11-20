@@ -8,6 +8,7 @@
     ./modules/audio.nix
     ./modules/bluetooth.nix
     ./modules/bootloader.nix
+    ./modules/btrfs.nix
     ./modules/fonts.nix
     ./modules/kernel.nix
     ./modules/maintenance.nix
@@ -41,6 +42,14 @@
     "video/x-matroska" = [ "mpv.desktop" ];
   };
 
+  # Compressed swap in RAM, used before the disk swap partition (which stays
+  # as overflow and hibernate target).
+  zramSwap.enable = true;
+
+  # Nix builds in /nix/var/nix/builds, not /tmp, so large builds do not
+  # consume this RAM-backed space.
+  boot.tmp.useTmpfs = true;
+
   services.printing.enable = false;
   programs.nano.enable = false;
 
@@ -71,6 +80,10 @@
       "@wheel"
     ];
   };
+
+  # Builds only get CPU time the desktop is not using. The matching I/O class
+  # needs the BFQ scheduler, and the NVMe drives use none, so it is not set.
+  nix.daemonCPUSchedPolicy = "idle";
 
   # Dedupe the store off-peak instead of on every write
   # (auto-optimise-store), which slows builds.

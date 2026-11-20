@@ -34,7 +34,6 @@ let
     fastfetch
     gh
     htop
-    nh
     nix-tree
     p7zip
     skim
