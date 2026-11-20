@@ -15,7 +15,7 @@ let
   ];
 
   devTools = with pkgs; [
-    clang-tools
+    llvmPackages_latest.clang-tools
     # Both compiler wrappers provide cc/c++; keep Clang on the generic names
     # while exposing the GNU compiler through gcc/g++.
     (lib.hiPrio llvmPackages_latest.clang)
