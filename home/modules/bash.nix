@@ -1,9 +1,7 @@
 { ... }:
 
-# GPG_TTY, the starship init and the yazi `y` wrapper are not set here: each
-# of the modules below emits its own, and duplicating them in initExtra only
-# meant a second, worse copy (a PATH lookup for starship instead of a store
-# path, and a `y` that could recurse into its own alias).
+# Shell init for starship, yazi (`y`) and GPG_TTY comes from their own
+# modules; do not repeat it in initExtra.
 {
   programs.bash = {
     enable = true;

@@ -7,13 +7,8 @@
   ...
 }:
 
-# The user half of a River session: its supervised services, the tools it uses
-# or binds keys to, and the wallpaper it draws.
-#
-# Kept out of home/modules/packages.nix so that a machine trying a different
-# compositor does not install the whole River toolchain, and so that the list
-# is answerable from the session it belongs to. Imported by each host's home
-# profile, mirroring hosts/profiles/river.nix on the system side.
+# The user half of a River session (system half: hosts/profiles/river.nix):
+# its services, the tools it binds keys to, and the wallpaper.
 let
   riverSessionTarget = "river-session.target";
   swayidlePath = lib.makeBinPath [
@@ -24,23 +19,16 @@ let
   ];
 in
 {
-  # The wallpaper lives here rather than being reached for at
-  # ~/nixos/walls/... by the scripts: the dotfiles repository should not need
-  # to know where this one is checked out. river/init exports $WALLPAPER from
-  # this path, and lock-screen reads it.
-  #
-  # To use a different one on a machine, override this in home/<Host>.nix.
+  # Exposed at ~/.config/wallpaper so config/ need not know where this repo
+  # lives; river/init and lock-screen read it. Override per host with mkForce.
   xdg.configFile."wallpaper".source = ../../walls/vague.png;
 
-  # Fnott is D-Bus activated and follows the River-specific systemd target
-  # selected below. Keep its portable, mutable configuration in the nested
-  # dotfiles checkout rather than using Home Manager's generated store file.
+  # Use the mutable config from config/ instead of the generated one.
   services.fnott.enable = true;
   xdg.configFile."fnott/fnott.ini" = lib.mkForce (linkDotfile "fnott/fnott.ini");
 
-  # River imports its display environment before starting this target. Keeping
-  # the target compositor-specific prevents graphical services from leaking
-  # across logout or a future compositor experiment.
+  # Graphical services are bound to a River-specific target that river/init
+  # starts and river-session stops, so none outlive the compositor.
   wayland.systemd.target = riverSessionTarget;
   systemd.user.targets.river-session.Unit = {
     Description = "River compositor session";
@@ -50,8 +38,8 @@ in
     After = [ "graphical-session-pre.target" ];
   };
 
-  # Keep the portable config in ~/.config/swayidle/config. Home Manager owns
-  # only the process lifecycle and the Nix-specific command search path.
+  # Home Manager runs swayidle; its config is ~/.config/swayidle/config. PATH
+  # covers the commands that config calls, including the helper scripts.
   services.swayidle = {
     enable = true;
     extraArgs = [ "-w" ];
@@ -62,8 +50,7 @@ in
     "PATH=${swayidlePath}:${config.xdg.configHome}/scripts"
   ];
 
-  # services.emacs is enabled in modules/emacs.nix without a default target;
-  # River supplies the graphical lifetime here.
+  # Tie the Emacs daemon (home/modules/emacs.nix) to the River session.
   systemd.user.services.emacs = {
     Unit = {
       After = [ riverSessionTarget ];

@@ -7,8 +7,7 @@
 # Packages every machine gets regardless of which desktop session it runs.
 # The River session's own tools live in home/profiles/river.nix.
 let
-  # Graphical applications. Not split per host because all three machines
-  # currently want the same ones; split only if that stops being true.
+  # Graphical applications; every host currently wants the same set.
   desktopApps = with pkgs; [
     easyeffects
     imv
@@ -19,14 +18,14 @@ let
     vesktop
     whatsapp-electron
     slack
-    webex 
+    webex
   ];
 
   previewTools = with pkgs; [
     ffmpegthumbnailer # video
     mediainfo # audio
     poppler-utils # pdf, via pdftoppm
-    vips # images, via vipsthumbnail
+    vips # images, via vipsthumbnail for dirvish
   ];
 
   terminalTools = with pkgs; [

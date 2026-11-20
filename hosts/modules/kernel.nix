@@ -1,8 +1,7 @@
 { pkgsKernel, ... }:
 
-# Keep every machine on the same deliberately selected kernel series. The
-# immutable flake input fixes the exact patch release, while this package name
-# remains stable across 7.1 patch updates.
+# Every machine runs the same kernel series. The flake input fixes the patch
+# release; this attribute name only changes when moving to a new series.
 {
-  boot.kernelPackages = pkgsKernel.linuxPackages_7_1;
+  boot.kernelPackages = pkgsKernel.linuxPackages_7_3;
 }

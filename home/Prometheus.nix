@@ -5,8 +5,8 @@
   ...
 }:
 
-# Yoga laptop. Username, home directory and the shared dotfile symlinks come
-# from home/base.nix and the flake; only Prometheus-specific settings go here.
+# Yoga laptop. Shared settings come from home/base.nix; only
+# Prometheus-specific ones go here.
 {
   imports = [
     ./base.nix
@@ -14,10 +14,8 @@
     ./modules/obs.nix
   ];
 
-  # The 3200x2000 panel runs at scale 1, so UI dimensions are in physical
-  # pixels and can be tuned independently from every other machine. Point
-  # these configs at this machine's variants; river reads its own values from
-  # config/river/hosts/Prometheus.sh.
+  # The 3200x2000 panel runs at scale 1, so these variants size the UI in
+  # physical pixels. River's equivalents are in config/river/hosts/Prometheus.sh.
   xdg.configFile."foot/foot.ini" = lib.mkForce (linkDotfile "foot/foot.Prometheus.ini");
   xdg.configFile."fuzzel/fuzzel.ini" = lib.mkForce (linkDotfile "fuzzel/fuzzel.Prometheus.ini");
 
@@ -28,6 +26,12 @@
     linkDotfile "wireplumber/scripts/prometheus-output-profile.lua";
 
   xdg.configFile."wallpaper".source = lib.mkForce ../walls/town.png;
+
+  programs.vscodium.profiles.default.userSettings = {
+    "window.zoomLevel" = 2;
+    "editor.fontFamily" = "'Berkeley Mono', monospace";
+    "editor.fontSize" = 16;
+  };
 
   home.packages = with pkgs; [
     zoom-us

@@ -1,11 +1,7 @@
 { ... }:
 
-# Settings every machine gets. Anything that only some machines want belongs
-# in a module under hosts/modules/ (imported by the hosts that want it) or in
-# a profile under hosts/profiles/.
-#
-# networking.hostName is not set here: it is derived from the flake
-# configuration name in flake.nix.
+# Settings every machine gets. Per-machine opt-ins go in hosts/modules/ or
+# hosts/profiles/. networking.hostName is set by flake.nix.
 {
   imports = [
     ./modules/packages.nix
@@ -30,10 +26,8 @@
 
   environment = {
     variables = {
-      # emacsclient, not emacs: River starts an Emacs daemon, and a bare
-      # `emacs` here would give every caller -- git, claude, codex -- a cold
-      # instance with none of the daemon's state. -a emacs falls back to
-      # starting one if no daemon is running.
+      # Reuse the Emacs daemon River starts; fall back to a plain emacs if
+      # none is running.
       EDITOR = "emacsclient -nw -a emacs";
     };
   };
@@ -50,10 +44,8 @@
   services.printing.enable = false;
   programs.nano.enable = false;
 
-  # Off everywhere, as it always has been. Note this is not merely the
-  # default: with Plasma installed, NixOS would otherwise switch it on.
-  # hosts/modules/power.nix additionally requires it off, since auto-cpufreq
-  # and power-profiles-daemon both drive the CPU governor.
+  # Plasma (Hephaestus) would enable it, and it conflicts with auto-cpufreq
+  # on the laptops (hosts/modules/power.nix).
   services.power-profiles-daemon.enable = false;
 
   nix.settings = {
@@ -62,16 +54,8 @@
       "flakes"
     ];
 
-    # Declared here as well as in the flake's nixConfig, which is not
-    # redundant: nixConfig is a client-specified setting, so the daemon
-    # honours it for trusted users alone. As an ordinary user every
-    # `nix build` and `nix flake check` was answered with "ignoring untrusted
-    # substituter" and went on to build from source. Set as a system setting
-    # these apply to every caller, root or not.
-    #
-    # The flake's copy still earns its place: it is all a machine has before
-    # its first switch, when this file is not yet on disk anywhere. See the
-    # comment there. The two lists have to be edited together.
+    # The flake's nixConfig only applies to trusted users; setting the caches
+    # here applies them to everyone. Keep in sync with nixConfig in flake.nix.
     substituters = [
       "https://nix-community.cachix.org"
       "https://cache.numtide.com"
@@ -81,21 +65,20 @@
       "niks3.numtide.com-1:DTx8wZduET09hRmMtKdQDxNNthLQETkc/yaX7M4qK0g="
     ];
 
-    # So a flake that brings its own nixConfig is honoured too, instead of
-    # being silently dropped the way the two above were.
+    # Lets wheel users accept a flake's own nixConfig.
     trusted-users = [
       "root"
       "@wheel"
     ];
   };
 
-  # Hardlink identical files in the store. Scheduled rather than
-  # nix.settings.auto-optimise-store, which hashes on every store write and
-  # slows builds down; this does the same work once, off-peak.
+  # Dedupe the store off-peak instead of on every write
+  # (auto-optimise-store), which slows builds.
   nix.optimise = {
     automatic = true;
     dates = [ "03:00" ];
   };
 
-  system.stateVersion = "25.11"; # just dont touch this
+  # Set at install time; never change it on an existing machine.
+  system.stateVersion = "25.11";
 }

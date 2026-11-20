@@ -1,9 +1,8 @@
 { ... }:
 
-# ThinkPad laptop. Username, home directory and the shared dotfile symlinks
-# come from home/base.nix and the flake; only Daedalus-specific settings go
-# here. To link an extra config directory on this machine only:
-#   xdg.configFile."foo" = linkDotfile "foo";   # helper lives in base.nix
+# ThinkPad laptop. Shared settings come from home/base.nix; only
+# Daedalus-specific ones go here, e.g.
+#   xdg.configFile."foo" = linkDotfile "foo";
 {
   imports = [
     ./base.nix

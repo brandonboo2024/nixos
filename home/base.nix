@@ -6,13 +6,12 @@
 }:
 
 let
-  # Application config lives in the nested config/ dotfiles repository and is
-  # symlinked out of the store, so edits there take effect without a rebuild.
-  # See the README: that repository must be cloned to ~/nixos/config.
+  # The nested config/ repository (cloned to ~/nixos/config, see README). Its
+  # files are symlinked directly, so edits apply without a rebuild.
   dotfiles = "${config.home.homeDirectory}/nixos/config";
 
-  # Link config/<subpath> to ~/.config/<subpath>. Exposed to the per-host
-  # profiles so they can add machine-specific links.
+  # Link config/<subpath> into place; also passed to host profiles as a
+  # module argument.
   linkDotfile = subpath: {
     source = config.lib.file.mkOutOfStoreSymlink "${dotfiles}/${subpath}";
     recursive = true;
@@ -28,18 +27,15 @@ let
     "tmux"
   ];
 
-  # Target path -> portable default source. These are linked file by file so a
-  # machine can select a profile without turning the target directory into a
-  # symlink back into the dotfiles repository. See home/Prometheus.nix and
-  # home/Hephaestus.nix for the machine-specific overrides.
+  # Target path -> default source, linked per file so a host can mkForce its
+  # own variant (see home/Prometheus.nix, home/Hephaestus.nix).
   configFiles = {
     "foot/foot.ini" = "foot/foot.default.ini";
     "fuzzel/fuzzel.ini" = "fuzzel/fuzzel.default.ini";
     "swayidle/config" = "swayidle/config.default";
   };
 
-  # Neovim is linked one subdirectory at a time rather than as a whole, so
-  # that ~/.config/nvim itself stays writable for anything nvim generates.
+  # Linked per subdirectory so ~/.config/nvim stays writable for nvim itself.
   nvimDirs = [
     "nvim/after"
     "nvim/lua"
@@ -79,34 +75,27 @@ in
       };
     };
 
-    includes = [
-      {
-        condition = "gitdir:~/102_school_proj/";
-        contents = {
-          user = {
+    # School and work repositories commit under the GitHub identity.
+    includes =
+      map
+        (dir: {
+          condition = "gitdir:${dir}";
+          contents.user = {
             name = "brandonboo2024";
             email = "brandonboojunwei@gmail.com";
           };
-        };
-      }
-      {
-        condition = "gitdir:~/work/";
-        contents = {
-          user = {
-            name = "brandonboo2024";
-            email = "brandonboojunwei@gmail.com";
-          };
-        };
-      }
-    ];
+        })
+        [
+          "~/102_school_proj/"
+          "~/work/"
+        ];
   };
   xdg.configFile =
     lib.genAttrs (configDirs ++ nvimDirs) linkDotfile
     // lib.mapAttrs (_target: source: linkDotfile source) configFiles;
 
-  # The helper scripts are called by bare name from tmux, River and each
-  # other. River puts them on PATH itself for the graphical session; this
-  # covers interactive shells.
+  # Helper scripts are called by bare name. River adds them to PATH for the
+  # graphical session; this covers interactive shells.
   home.sessionPath = [ "${config.xdg.configHome}/scripts" ];
 
   home.stateVersion = "25.11";

@@ -5,8 +5,8 @@
   ...
 }:
 
-# Desktop. Username, home directory and the shared dotfile symlinks come from
-# home/base.nix and the flake; only Hephaestus-specific settings go here.
+# Desktop. Shared settings come from home/base.nix; only Hephaestus-specific
+# ones go here.
 {
   imports = [
     ./base.nix

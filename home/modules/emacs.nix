@@ -16,8 +16,7 @@
 
   home.packages = [ pkgs.hunspellDicts.en_US ];
 
-  # The River profile binds this service to river-session.target. Avoid the
-  # module's default login-session target so the daemon cannot outlive River.
+  # Started by home/profiles/river.nix instead, so it does not outlive River.
   services.emacs = {
     enable = true;
     startWithUserSession = false;

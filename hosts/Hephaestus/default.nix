@@ -14,10 +14,9 @@
 
   services.desktopManager.plasma6.enable = true;
 
-  # No power daemon runs here: auto-cpufreq is for the laptops and
-  # power-profiles-daemon is off everywhere (see hosts/base.nix). Pin the
-  # governor instead, so the desktop keeps running flat out. amd-pstate-epp
-  # offers only "performance" and "powersave".
+  # No power daemon runs here (see hosts/base.nix), so set the governor
+  # directly. amd-pstate-epp offers only "performance" and "powersave"; the
+  # latter still boosts on demand, driven by the EPP hint.
   powerManagement.cpuFreqGovernor = "powersave";
 
   hardware.nvidia.powerManagement = {

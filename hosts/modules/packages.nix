@@ -1,18 +1,8 @@
 { lib, pkgs, ... }:
 
-# Only packages nothing else already pulls in. A service module that needs a
-# tool installs it as part of enabling the service, so listing it again here
-# is not belt and braces, it is a second copy that hides where the dependency
-# really comes from. Removed on those grounds:
-#
-#   bluez                     hardware.bluetooth.enable
-#   xwayland                  programs.river-classic.xwayland.enable
-#   xdg-desktop-portal-wlr    xdg.portal.extraPortals, set by river-classic
-#   xdg-desktop-portal-gtk    likewise
-#
-# xwayland-satellite went with them: it exists for compositors with no
-# XWayland of their own, and River has one. xkbcomp and xkeyboard-config are
-# X11-era; River takes its keymap through libxkbcommon.
+# Only packages no enabled module already installs (e.g. bluez comes from
+# hardware.bluetooth, xwayland and the portals from river-classic), so each
+# dependency stays visible where it comes from.
 let
   desktopPackages = with pkgs; [
     vim

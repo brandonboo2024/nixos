@@ -1,7 +1,11 @@
 #!/usr/bin/env bash
 
+# Manual fallback for the Yoga's silent speakers: writes the TAS2781 amplifier
+# registers directly over I2C (run as root, needs i2c-tools). Not used by
+# sound.nix, which fixes the native driver instead; kept for when that fails.
+
 export TERM=linux
-# Some distros don't have i2c-dev module loaded by default, so we load it manually
+# i2cdetect/i2cset need the i2c-dev interface.
 
 modprobe i2c-dev
 
@@ -11,7 +15,8 @@ echo "Laptop model: $laptop_model"
 # Function to find the correct I2C bus
 find_i2c_bus() {
     local adapter_description="Synopsys DesignWare I2C adapter"
-    local dw_count=$(i2cdetect -l | grep -c "$adapter_description")
+    local dw_count
+    dw_count=$(i2cdetect -l | grep -c "$adapter_description")
 
     # Use 2nd adapter for 16IAH10 (Gen 10), 3rd for others
     local bus_index=3
@@ -22,12 +27,13 @@ find_i2c_bus() {
         return 1
     fi
     # local bus_number=$(i2cdetect -l | grep "$adapter_description" | awk '{print $1}' | sed 's/i2c-//' | sed -n "${bus_index}p")
-		local bus_number=$(
-			i2cdetect -l |
-				grep "$adapter_description" |
-				sed -n "${bus_index}p" |
-				sed -E 's/^i2c-([0-9]+).*/\1/'
-		)
+    local bus_number
+    bus_number=$(
+        i2cdetect -l |
+            grep "$adapter_description" |
+            sed -n "${bus_index}p" |
+            sed -E 's/^i2c-([0-9]+).*/\1/'
+    )
     echo "$bus_number"
 }
 i2c_bus=$(find_i2c_bus)
@@ -44,6 +50,8 @@ else
     i2c_addr=(0x3f 0x38)
 fi
 
+# Same init sequence for each amplifier; even and odd ones get different
+# 0x0a (TDM slot) values, i.e. alternate channels.
 count=0
 for value in "${i2c_addr[@]}"; do
     val=$((count % 2))

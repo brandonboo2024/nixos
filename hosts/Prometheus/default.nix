@@ -11,6 +11,7 @@
     ../modules/nvidia.nix
     ./sound.nix
     ../modules/vm.nix
+    ../modules/wireshark.nix
   ];
 
   hardware.nvidia.prime = {

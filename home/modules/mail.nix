@@ -3,10 +3,7 @@
   programs.mbsync.enable = true;
   programs.msmtp.enable = true;
 
-  # No preNew hook fetching mail: the mbsync timer below owns fetching and
-  # calls `notmuch new` itself once it is done. Doing it in both places meant
-  # the timer synced mail that was never indexed, while a manual `notmuch new`
-  # redundantly synced again before indexing it.
+  # No preNew fetch hook: the mbsync timer below fetches, then indexes.
   programs.notmuch = {
     enable = true;
     hooks.postNew = ''
@@ -52,8 +49,7 @@
     msmtp.enable = true;
   };
 
-  # Fetch, then index. Without postExec the timer left new mail on disk and
-  # invisible to notmuch until the next manual `notmuch new`.
+  # Fetch every 10 minutes, then index.
   services.mbsync = {
     enable = true;
     frequency = "*:0/10";

@@ -3,9 +3,8 @@
   pkgs,
   ...
 }:
-# The Lua configuration in config/nvim is symlinked by home/base.nix whether or
-# not this module installs Neovim, so flipping `enable` is all that is needed to
-# get an nvim that reads it.
+# Disabled. home/base.nix links config/nvim regardless, so flipping `enable`
+# is all it takes to bring it back.
 {
   programs.neovim = {
     enable = false;

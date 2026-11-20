@@ -1,12 +1,7 @@
 { ... }:
 
-# Battery-oriented power management. Imported by the laptop profile only: on
-# the desktop these do nothing useful (thermald is Intel-specific, and the
-# "battery" half of auto-cpufreq never applies).
-#
-# auto-cpufreq requires power-profiles-daemon to be off, since both drive the
-# CPU governor and NixOS refuses to enable the two together. base.nix disables
-# it on every machine, so there is nothing to do here.
+# Battery-oriented power management, imported by the laptop profile.
+# auto-cpufreq needs power-profiles-daemon off, which hosts/base.nix does.
 {
   services.thermald.enable = true;
 

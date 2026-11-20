@@ -1,5 +1,9 @@
 { pkgs, ... }:
 
+# This workaround relies on the kernel's TAS2781 driver: the
+# snd_hda_scodec_tas2781_i2c module and its "Speaker Force Firmware Load"
+# control. Check both and boot-test the speakers before bumping the shared
+# kernel pin in flake.nix.
 let
   # The TAS2781 amplifiers are attached to this Meteor Lake DesignWare I2C
   # controller. Keep the identity checks beside the service that removes and

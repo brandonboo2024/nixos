@@ -1,14 +1,14 @@
 { pkgs, hostName, ... }:
 
-# Docker. Importing this module is all a host needs to do: it turns on the
-# daemon and puts that machine's user in the group required to talk to it.
+# Local Docker and MySQL for development. Importing this module enables both
+# and adds the host's user to their groups.
 {
   networking.firewall.allowedTCPPorts = [
     80
     443
     3306
   ];
-  
+
   virtualisation.docker = {
     enable = true;
     storageDriver = "btrfs";
@@ -19,5 +19,8 @@
     package = pkgs.mysql84;
   };
 
-  users.users.${hostName}.extraGroups = [ "docker" "mysql" ];
+  users.users.${hostName}.extraGroups = [
+    "docker"
+    "mysql"
+  ];
 }

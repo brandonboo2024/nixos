@@ -64,7 +64,31 @@ let
     clippy
   ];
 
+  ops = with pkgs; [
+    minikube
+    (wrapHelm kubernetes-helm {
+      plugins = with pkgs.kubernetes-helmPlugins; [
+        helm-secrets
+        helm-diff
+        helm-s3
+        helm-git
+      ];
+    })
+  ];
 in
 {
+  # k8s removed for now
   home.packages = lsps ++ utilities ++ languages;
+
+  # programs.vscodium = {
+  #   enable = true;
+  #   profiles.default.extensions = with pkgs.vscode-extensions; [
+  #     llvm-vs-code-extensions.vscode-clangd
+  #     ms-vscode.cpptools
+  #     ms-vscode.cmake-tools
+  #     ms-vscode.makefile-tools
+  #     twxs.cmake
+  #     vadimcn.vscode-lldb
+  #   ];
+  # };
 }

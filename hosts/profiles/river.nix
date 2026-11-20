@@ -1,13 +1,13 @@
-{ config, lib, pkgs, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 
-# Everything that makes a machine a River machine: the compositor, the login
-# command that starts it, and the environment a Wayland session needs.
-#
-# This is a profile rather than part of base.nix so that the active session is
-# visible in a host's imports, and so that trying another compositor is a
-# matter of importing a different profile instead of editing shared settings.
-# XDG_CURRENT_DESKTOP in particular is a claim about the running session and
-# would simply be false under anything else.
+# The River session: compositor, greetd login, and Wayland environment. A
+# profile rather than part of base.nix so another compositor can be tried by
+# importing a different one.
 let
   riverSession = pkgs.writeShellScript "river-session" ''
     ${lib.optionalString (config.networking.hostName == "Prometheus") ''
@@ -18,6 +18,8 @@ let
       export WLR_DRM_DEVICES="$intel_drm"
     ''}
 
+    # Stop the user session target when River exits, so its services do not
+    # outlive the compositor.
     ${pkgs.river-classic}/bin/river
     river_status=$?
     ${pkgs.systemd}/bin/systemctl --user stop river-session.target
@@ -30,9 +32,8 @@ in
     xwayland.enable = true;
   };
 
-  # Persuade the toolkits to speak Wayland natively rather than falling back
-  # to XWayland. Applications that genuinely need XWayland override it for
-  # themselves -- see home/modules/sioyek.nix.
+  # Prefer native Wayland in every toolkit. Apps that need XWayland override
+  # this themselves (see home/modules/sioyek.nix).
   environment.sessionVariables = {
     NIXOS_OZONE_WL = "1";
     MOZ_ENABLE_WAYLAND = "1";

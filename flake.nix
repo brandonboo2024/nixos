@@ -1,17 +1,9 @@
 {
   description = "Minimal NixOS with River and Emacs";
 
-  # Duplicated in hosts/base.nix, and deliberately so. This copy is the only
-  # one that exists before a machine has switched: `nixos-install --flake` off
-  # an installer ISO reads it, runs as root, and root is trusted by default,
-  # so the first build of emacs-git-pgtk and the coding agents comes from a cache
-  # instead of from source. hosts/base.nix takes over from the first switch
-  # onward and covers every user rather than only trusted ones.
-  #
-  # Keeping the two in step is manual: nixConfig is read by the Nix CLI before
-  # the flake is evaluated, so it cannot see a `let` binding (flake.nix must be
-  # a literal attribute set) and it is not exposed on `self` for the modules to
-  # read back. There is no way to write the list once. Change one, change both.
+  # Also set in hosts/base.nix; keep the two lists in sync by hand. This copy
+  # lets the first `nixos-install --flake` hit the caches before base.nix is on
+  # disk. nixConfig must be a literal, so it cannot share a binding with it.
   nixConfig = {
     extra-substituters = [
       "https://nix-community.cachix.org"
@@ -23,10 +15,12 @@
     ];
   };
   inputs = {
-    # Keep kernel updates deliberate and independent from ordinary flake
-    # updates. This revision exposes Linux 7.1.5 as linuxPackages_7_1, the
-    # newest version verified end to end on Prometheus.
-    nixpkgs-kernel.url = "github:NixOS/nixpkgs/148bab9c1c3c53136ecb44a6ea356a0ed5b39b06";
+    # Pinned so kernel bumps are deliberate and tested on hardware (see
+    # hosts/Prometheus/sound.nix). Bump it to the current `nixpkgs` rev: the
+    # NixOS module tooling assumes the kernel's build layout, and a stale pin
+    # breaks the build (Linux 7.1 lacked the modules.cer that newer tooling
+    # copies).
+    nixpkgs-kernel.url = "github:NixOS/nixpkgs/04906337b6d53e8bb0eaf0470ae9f070a4d4eb55";
     nixpkgs-stable.url = "nixpkgs/nixos-25.11";
     nixpkgs.url = "nixpkgs/nixos-unstable";
     home-manager = {
@@ -45,8 +39,8 @@
       url = "github:nix-community/emacs-overlay";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    # One source for the coding-agent CLIs. Its nixpkgs is deliberately not
-    # followed so the builds match what cache.numtide.com serves.
+    # Coding-agent CLIs. Its nixpkgs is not followed, so builds match what
+    # cache.numtide.com serves.
     llm-agents.url = "github:numtide/llm-agents.nix";
   };
   outputs =
@@ -70,28 +64,21 @@
           config.allowUnfree = true;
         };
 
-      # Passed to every system and Home Manager module through specialArgs, so
-      # any module can substitute a single package from stable without the
-      # whole machine moving off unstable. A module opts in just by naming
-      # pkgsStable in its argument set; home/profiles/river.nix does this for
-      # creek, whose zig-wayland scanner does not build against unstable's
-      # wayland 1.26. Keeping the escape hatch is the point: this is the cheap
-      # way out when one package breaks on unstable.
+      # Escape hatch for single packages that break on unstable: any module
+      # can take `pkgsStable` as an argument (e.g. creek in
+      # home/profiles/river.nix).
       pkgsStable = mkPkgs nixpkgs-stable;
-      # Kernel package sets must stay free of application overlays. In
-      # particular, this keeps the kernel and its out-of-tree modules exactly
-      # as built by the pinned nixpkgs revision.
+      # No overlays, so the kernel and its out-of-tree modules match the cache
+      # for the pinned revision.
       pkgsKernel = import nixpkgs-kernel {
         inherit system;
         config.allowUnfree = true;
       };
       pkgs = mkPkgs nixpkgs;
 
-      # Every machine is identified by one name, used as the flake
-      # configuration name, the hostname, the Home Manager username and the
-      # home directory. Everything below is derived from it, so there is
-      # nothing to keep in agreement by hand: to add a machine, create
-      # hosts/<Name>/ and home/<Name>.nix and add it to `hosts` below.
+      # One name per machine: flake output, hostname, username and home
+      # directory. To add a machine, create hosts/<Name>/ and home/<Name>.nix
+      # and list it in `hosts`.
       mkHost =
         hostName:
         nixpkgs.lib.nixosSystem {
@@ -133,9 +120,7 @@
           ];
         };
 
-      # Which device each name is on is in the README's host table, which is
-      # where someone looks for it. Recording it here as well only gave a
-      # value that mapAttrs then had to discard.
+      # The README's host table maps each name to its device.
       hosts = [
         "Hephaestus"
         "Prometheus"
@@ -143,9 +128,7 @@
       ];
     in
     {
-      # `nix fmt` formats every tracked .nix file. nixfmt-tree is the treefmt
-      # wrapper around nixfmt: unlike bare nixfmt it honours .gitignore, so it
-      # will not descend into the nested config/ dotfiles repository.
+      # nixfmt-tree honours .gitignore, so `nix fmt` skips the nested config/.
       formatter.${system} = pkgs.nixfmt-tree;
 
       nixosConfigurations = nixpkgs.lib.genAttrs hosts mkHost;
