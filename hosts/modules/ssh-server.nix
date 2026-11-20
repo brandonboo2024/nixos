@@ -1,7 +1,7 @@
 { hostName, ... }:
 
-# Accept SSH logins to this machine's user from the home LAN, so a laptop can
-# use the desktop's GPU. Keys only: password and root logins are refused.
+# Accept SSH logins to this machine's user from the home LAN, so any device can ssh to
+# another's if need be.
 #
 # The port is opened on the wired interface alone rather than through
 # services.openssh.openFirewall, which would open it on every interface.
@@ -11,7 +11,7 @@
     enable = true;
     openFirewall = false;
     settings = {
-      PasswordAuthentication = false;
+      PasswordAuthentication = true;
       KbdInteractiveAuthentication = false;
       PermitRootLogin = "no";
       AllowUsers = [ hostName ];
