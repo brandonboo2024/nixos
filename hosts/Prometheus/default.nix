@@ -21,6 +21,12 @@
     nvidiaBusId = "PCI:1:0:0";
   };
 
+  # VA-API driver for the Intel iGPU, which drives the display. Without it
+  # libva finds no driver for i915 and browsers, mpv and video calls decode
+  # on the CPU. libva picks it from the render node's kernel driver, so
+  # LIBVA_DRIVER_NAME is left unset and NVIDIA offload keeps its own driver.
+  hardware.graphics.extraPackages = [ pkgs.intel-media-driver ];
+
   # Failed boots with linux-firmware 20260810 logged AX211 RT ucode startup
   # failures and a Bluetooth hardware error. Keep Prometheus on the known-good
   # 20260622 package independently from the shared kernel policy.
