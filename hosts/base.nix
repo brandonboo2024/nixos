@@ -32,6 +32,8 @@
     };
   };
 
+  documentation.man.generateCaches = true;
+
   # Default handlers for PDFs and the image and video formats used by Yazi.
   xdg.mime.defaultApplications = {
     "application/pdf" = [ "sioyek.desktop" ];

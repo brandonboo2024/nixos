@@ -34,7 +34,10 @@ let
       minted
     ]))
     # mysql
-    mycli
+    # mycli
+    stdman  # c++ ref
+    man-pages # syscalls
+    glibcInfo
   ];
   lsps = with pkgs; [
     # Language Servers
@@ -75,8 +78,12 @@ let
   ];
 in
 {
-  # k8s removed for now
+  # add ops if you want k8s
   home.packages = lsps ++ utilities ++ languages;
+
+  # Index the home profile's man pages (man-pages, stdman) for apropos and
+  # consult-man; documentation.man.generateCaches only covers the system profile.
+  programs.man.generateCaches = true;
 
   # programs.vscodium = {
   #   enable = true;
